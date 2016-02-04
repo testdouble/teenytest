@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+var teenytest = require('../index'),
+    testGlob = process.argv[2] || 'test/lib/**/*.js',
+    fs = require('fs')
+
+var passing = teenytest(testGlob, {
+  helperPath: fs.existsSync('test/helper.js') ? 'test/helper.js' : null
+})
+
+process.exit(passing ? 0 : 1)
+

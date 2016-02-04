@@ -1,0 +1,31 @@
+{
+  "name": "teenytest",
+  "version": "1.0.0",
+  "description": "A teeny tiny test runner",
+  "main": "index.js",
+  "bin": "bin/teenytest",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/testdouble/teenytest.git"
+  },
+  "scripts": {
+    "test": "cd example && ../bin/teenytest | grep 'not ok 3 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`'"
+  },
+  "keywords": [
+    "teeny",
+    "tiny",
+    "testing",
+    "tap",
+    "tap13"
+  ],
+  "author": "Justin Searls <searls@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/testdouble/teenytest/issues"
+  },
+  "homepage": "https://github.com/testdouble/teenytest#readme",
+  "dependencies": {
+    "glob": "^6.0.4",
+    "lodash": "^4.2.1"
+  }
+}
