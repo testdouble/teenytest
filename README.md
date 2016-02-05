@@ -119,12 +119,12 @@ var assert = require('assert')
 
 module.exports = {
   beforeAll: function() { console.log("I'll run once before both tests") },
-  beforeEach: function() { console.log("I'll run twice before each test") },
+  beforeEach: function() { console.log("I'll run twice - once before each test") },
 
   adds: function() { assert.equal(1 + 1, 2) },
   subtracts: function() { assert.equal(4 - 2, 2) },
 
-  afterEach: function() { console.log("I'll run twice after each test") },
+  afterEach: function() { console.log("I'll run twice - once after each test") },
   afterAll: function() { console.log("I'll run once after both tests") }
 }
 ```
@@ -136,12 +136,12 @@ tests will make teenytest's output unparseable by TAP reporters):
 TAP version 13
 1..2
 I'll run once before both tests
-I'll run twice before each test
+I'll run twice - once before each test
 ok 1 - "adds" - test #1 in `test/lib/exporting-an-object.js`
-I'll run twice after each test
-I'll run twice before each test
+I'll run twice - once after each test
+I'll run twice - once before each test
 ok 2 - "subtracts" - test #2 in `test/lib/exporting-an-object.js`
-I'll run twice after each test
+I'll run twice - once after each test
 I'll run once after both tests
 ```
 
