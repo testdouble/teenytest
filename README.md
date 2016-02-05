@@ -1,5 +1,7 @@
 # teenytest
 
+[![Build Status](https://travis-ci.org/testdouble/teenytest.svg?branch=master)](https://travis-ci.org/testdouble/teenytest)
+
 A test runner so tiny, you have to squint to see it!
 
 If you put test scripts in `test/lib`, then teenytest's CLI will run them with
@@ -86,6 +88,22 @@ var assert = require('assert')
 module.exports = function blueIsRed(){
   assert.equal('blue', 'red')
 }
+```
+
+The above test will fail (since `'blue'` doesn't equal `'red'`) with output like:
+
+```
+TAP version 13
+1..1
+not ok 1 - "blueIsRed" - test #1 in `test/lib/single-function.js`
+  ---
+  message: 'blue' == 'red'
+  stacktrace: AssertionError: 'blue' == 'red'
+    at blueIsRed (teenytest/example/test/lib/single-function.js:4:10)
+    at teenytest/index.js:47:9
+    ...
+    at Module._compile (module.js:434:26)
+  ...
 ```
 
 ### Exporting an object
