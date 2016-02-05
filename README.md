@@ -169,7 +169,8 @@ module.exports = {
 In this case, the `beforeAll`/`afterAll` hooks will run only at the beginning
 and the end of the entire suite (whereas the same hooks exported from a single
 test file will run before or after all the tests in that same file).  The
-`beforeEach`/`afterEach` hooks, meanwhile will run
+`beforeEach`/`afterEach` hooks, meanwhile will run before and after each test
+in the entire suite.
 
 ## Reporting
 
