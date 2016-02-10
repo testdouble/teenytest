@@ -2,9 +2,7 @@ var _ = require('lodash')
 var helper = require('./support/helper')
 var assert = require('assert')
 
-ogConsoleLog = console.log
-var result = helper.run('example/test/lib/**/*.js'),
-    log = helper.log()
+var result = helper.run('example/test/lib/**/*.js')
 
 assert.equal(result, false)
 helper.assertLog(
@@ -21,6 +19,6 @@ helper.assertLog(
   "not ok 3 - \"blueIsRed\" - test #1 in `example/test/lib/single-function.js`",
   "  ---",
   "  message: 'blue' == 'red'",
-  /  stacktrace: AssertionError: \'blue\' == \'red\'\n    at blueIsRed /,
+  /  stacktrace: AssertionError: 'blue' == 'red'/,
   "  ..."
 )
