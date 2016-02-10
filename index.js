@@ -41,10 +41,11 @@ module.exports = function(testGlob, options) {
   _.each(testModules, function(testModule) {
     testModule.beforeAll()
     _.each(testModule.tests, function(test, i) {
-      helper.beforeEach()
-      testModule.beforeEach()
+      var context = {}
+      helper.beforeEach.call(context)
+      testModule.beforeEach.call(context)
       try {
-        test()
+        test.call(context)
 
         log('ok '+currentTestOrdinal+' - '+(test.testName ? '"'+test.testName+'" - ' : '')+'test #'+(i+1)+' in `'+testModule.file+'`')
       } catch(e) {
@@ -55,8 +56,8 @@ module.exports = function(testGlob, options) {
         log('  stacktrace:',e.stack)
         log('  ...')
       }
-      helper.afterEach()
-      testModule.afterEach()
+      helper.afterEach.call(context)
+      testModule.afterEach.call(context)
       currentTestOrdinal++
     })
     testModule.afterAll()

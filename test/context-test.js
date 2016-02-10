@@ -4,11 +4,11 @@ var assert = require('assert')
 
 var result = helper.run('test/fixtures/context-*.js')
 
-assert.equal(result, false)
+assert.equal(result, true)
 helper.assertLog(
   "TAP version 13",
   "1..2",
-  "ok 1 - \"adds\" - test #1 in `example/test/lib/exporting-an-object.js`",
-  "ok 2 - \"subtracts\" - test #2 in `example/test/lib/exporting-an-object.js`"
+  "ok 1 - \"test1\" - test #1 in `test/fixtures/context-test.js`",
+  "ok 2 - \"test2\" - test #2 in `test/fixtures/context-test.js`"
 )
 
