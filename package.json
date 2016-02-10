@@ -9,7 +9,8 @@
     "url": "git+https://github.com/testdouble/teenytest.git"
   },
   "scripts": {
-    "test": "cd example && ../bin/teenytest | grep 'not ok 3 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`'"
+    "test": "./test/support/runner.js && npm run test:example",
+    "test:example": "cd example && ../bin/teenytest | grep 'not ok 3 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`' && echo 'Good! Above error is expected'"
   },
   "keywords": [
     "teeny",
