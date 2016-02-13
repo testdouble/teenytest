@@ -57,21 +57,20 @@ defaults:
 
 var teenytest = require('teenytest')
 
-var passing = teenytest('test/lib/**/*.js', {
+teenytest('test/lib/**/*.js', {
   helperPath: 'test/helper.js', // module that exports test hook functions (default: null)
   output: console.log, // output for writing results (default: console.log)
   cwd: process.cwd() // base path for test globs & helper path (default: process.cwd())
+}, function(er, passing) {
+  process.exit(!er && passing ? 0 : 1)
 })
-
-process.exit(passing ? 0 : 42)
 ```
 
 As you can see, the above script will bail with a non-zero exit code if the tests
-don't pass.
+don't pass or if a fatal error occurs.
 
-For teenyness sake, the API is synchronous, meaning that asynchronous tests are
-not supported. If that doesn't suit you, we recommend adopting a somewhat less
-teeny test runner.
+The API is asynchronous, but both sycnhronous and asynchronous tests are
+supported.
 
 ## Writing tests
 
@@ -129,8 +128,8 @@ module.exports = {
 }
 ```
 
-Will output what you might expect (be warned: using `console.log` in your actual
-tests will make teenytest's output unparseable by TAP reporters):
+This will output what you might expect (be warned: using `console.log` in your
+actual tests will make teenytest's output unparseable by TAP reporters):
 
 ```
 TAP version 13
@@ -144,6 +143,36 @@ ok 2 - "subtracts" - test #2 in `test/lib/exporting-an-object.js`
 I'll run twice - once after each test
 I'll run once after both tests
 ```
+
+### Writing asynchronous tests
+
+Any test hook or test function can also support asynchronous behavior, via a
+callback function. To indicate that a function is asynchronous, add a function
+argument to the test method.
+
+For instance, a synchronous test could:
+
+``` js
+module.exports = function() {
+  require('assert').equal(1+1, 2)
+}
+```
+
+But an asynchronous test could specify a `done` argument and tell teenytest that
+the test (or hook) is complete by invoking `done()`.
+
+``` js
+module.exports = function(done) {
+  process.nextTick(function(){
+    require('assert').equal(1+1, 2)
+    done()
+  })
+}
+```
+
+A test failure can be triggered by either throwing an uncaught exception (which
+teenytest will be listening for during each asynchronous step) or by passing an
+`Error` as the first argument to `done`.
 
 ## Test Helper & Global Hooks
 
