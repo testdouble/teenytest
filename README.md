@@ -18,10 +18,18 @@ $ npm i --save-dev teenytest
 teenytest includes a CLI, which can be run ad hoc with:
 
 ```
-$ $(npm bin)/teenytest "test/lib/**/*.js"
+$ $(npm bin)/teenytest
 ```
 
-But we prefer including it in the `scripts` section of your package.json:
+By default, the CLI will assume your tests are in `"test/lib/**/*.js"` and it
+will search for a test helper in `"test/helper.js"`. You can specify either or
+both of these by providing arguments, as well:
+
+```
+$ $(npm bin)/teenytest "test/lib/**/*.js" --helper "test/helper.js"
+```
+
+We prefer including our script in the `scripts` section of our package.json:
 
 ``` json
 "scripts": {
@@ -43,11 +51,11 @@ for tests in `"test/lib/**/*.js"`
 
 If you `require('teenytest')`, its exported function looks like:
 
-> teenytest(globOfTestPaths, [options])
+> teenytest(globOfTestPaths, [options], callback)
 
 The function takes a glob pattern describing where your tests are located and
-an options object with a few simple settings. If your tests pass, it
-returns `true`. If your tests fail, it returns `false`.
+an options object with a few simple settings. If your tests pass, the callback's
+second argument will be `true`. If your tests fail, it will be `false`.
 
 Here's an example test script with every option set and a comment on the
 defaults:
@@ -71,7 +79,7 @@ teenytest('test/lib/**/*.js', {
 As you can see, the above script will bail with a non-zero exit code if the tests
 don't pass or if a fatal error occurs.
 
-The API is asynchronous, but both sycnhronous and asynchronous tests are
+While the API is asynchronous, but both sycnhronous and asynchronous tests are
 supported.
 
 ## Writing tests

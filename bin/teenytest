@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
 var teenytest = require('../index'),
-    testGlob = process.argv[2] || 'test/lib/**/*.js',
+    argv = require('minimist')(process.argv.slice(2))
+    testGlob = argv['_'][0] || 'test/lib/**/*.js',
+    helperPath = argv['helper'] || 'test/helper.js',
     fs = require('fs')
 
 teenytest(testGlob, {
-  helperPath: fs.existsSync('test/helper.js') ? 'test/helper.js' : null
+  helperPath: fs.existsSync(helperPath) ? helperPath : null
 }, function(er, passing) {
   process.exit(!er && passing ? 0 : 1)
 })
