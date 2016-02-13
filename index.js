@@ -2,15 +2,20 @@ var glob = require('glob')
 var _ = require('lodash')
 var path = require('path')
 var async = require('async')
+var userActionsFactory = require('./lib/user-actions-factory')
 
-var anyAsyncInTestRun
-module.exports = function(testGlob, options, cb) {
-  if(arguments.length < 3) { cb = options; options = {} }
-  var log = options.output || console.log,
-    cwd = options.cwd || process.cwd(),
-    helper = buildTestHelper(options.helperPath, cwd),
+module.exports = function(testGlob, userOptions, cb) {
+  if(arguments.length < 3) { cb = userOptions; userOptions = {} }
+  var cwd = userOptions.cwd || process.cwd(),
+    helper = buildTestHelper(userOptions.helperPath, cwd),
+    options = _.assign({}, {
+      output: console.log,
+      asyncTimeout: 5000,
+      asyncInterval: 10
+    }, userOptions, helper.options),
+    log = options.output,
     testModules = buildTestModules(testGlob, cwd),
-    anyAsyncInTestRun = false
+    userActions = userActionsFactory(options),
     passed = true
 
   log('TAP version 13')
@@ -28,7 +33,7 @@ module.exports = function(testGlob, options, cb) {
     }
   }
   testSuiteActions = [
-    wrap(helper.beforeAll, {description: 'global test helper beforeAll hook'}, testSuiteErrorLogger),
+    userActions.wrap(helper.beforeAll, {description: 'global test helper beforeAll hook'}, testSuiteErrorLogger),
     function(cb) {
       var testModuleActions = _(testModules).map(function(testModule, testModuleIndex){
         var thisTestModulePassed = true,
@@ -43,7 +48,7 @@ module.exports = function(testGlob, options, cb) {
               }
             }
         return [
-          wrap(testModule.beforeAll, addHookDescription('beforeAll', testModule), testModuleErrorLogger),
+          userActions.wrap(testModule.beforeAll, addHookDescription('beforeAll', testModule), testModuleErrorLogger),
           function(cb) {
             var testFunctionActions = _(testModule.tests).map(function(test, i){
               var thisTestPassed = true,
@@ -59,10 +64,10 @@ module.exports = function(testGlob, options, cb) {
                   }
 
               return [
-                wrap(helper.beforeEach, addHookDescription('global beforeEach', test, i), testFunctionErrorLogger),
-                wrap(testModule.beforeEach, addHookDescription('beforeEach', test, i), testFunctionErrorLogger),
+                userActions.wrap(helper.beforeEach, addHookDescription('global beforeEach', test, i), testFunctionErrorLogger),
+                userActions.wrap(testModule.beforeEach, addHookDescription('beforeEach', test, i), testFunctionErrorLogger),
                 function(cb) {
-                  callUserFunction(test.testFunction, test.context, function(e){
+                  userActions.invoke(test.testFunction, test.context, function(e){
                     if(!e && thisTestPassed && thisTestModulePassed && thisTestSuitePassed) {
                       log('ok '+test.description)
                     } else {
@@ -78,20 +83,20 @@ module.exports = function(testGlob, options, cb) {
                     cb(null)
                   })
                 },
-                wrap(helper.afterEach, addHookDescription('global afterEach', test, i), testFunctionErrorLogger),
-                wrap(testModule.afterEach, addHookDescription('afterEach', test, i), testFunctionErrorLogger)
+                userActions.wrap(helper.afterEach, addHookDescription('global afterEach', test, i), testFunctionErrorLogger),
+                userActions.wrap(testModule.afterEach, addHookDescription('afterEach', test, i), testFunctionErrorLogger)
               ]
             }).flatten().value()
 
             async.series(testFunctionActions, cb)
           },
-          wrap(testModule.afterAll, addHookDescription('afterAll', testModule), testModuleErrorLogger)
+          userActions.wrap(testModule.afterAll, addHookDescription('afterAll', testModule), testModuleErrorLogger)
         ]
       }).flatten().value()
 
       async.series(testModuleActions, cb)
     },
-    wrap(helper.afterAll, {description: 'global test helper afterAll hook'}, testSuiteErrorLogger),
+    userActions.wrap(helper.afterAll, {description: 'global test helper afterAll hook'}, testSuiteErrorLogger),
   ]
 
   async.series(testSuiteActions, function(e) {
@@ -107,11 +112,12 @@ module.exports = function(testGlob, options, cb) {
 }
 
 var buildTestHelper = function(helperPath, cwd) {
-  return _.extend({}, {
+  return _.assign({}, {
       beforeAll: function(){},
       afterAll: function(){},
       beforeEach: function(){},
-      afterEach: function(){}
+      afterEach: function(){},
+      options: {}
     }, helperPath ? require(path.resolve(cwd, helperPath)) : {})
 }
 
@@ -158,45 +164,6 @@ var testFunctionsIn = function(testModule) {
         }
       }).
       value()
-  }
-}
-
-var waitForCallback = require('./lib/wait-for-callback')
-var wrap = function(userFunction, testOrModule, errorLogger) {
-  return _.assign(function(cb) {
-      callUserFunction(userFunction, testOrModule, cb, errorLogger)
-    },
-    { object: testOrModule}
-  )
-}
-var callUserFunction = function(userFunction, testOrModule, cb, errorHandler) {
-  var context = testOrModule ? testOrModule.context : this
-  if(userFunction.length == 0) {
-    try {
-      userFunction.call(context)
-      cb(null)
-    } catch(e) {
-      if(errorHandler) {
-        errorHandler(e, testOrModule)
-        cb(null)
-      } else {
-        cb(e)
-      }
-    }
-  } else {
-    anyAsyncInTestRun = true
-    waitForCallback(userFunction, context , 10, 5000, function(e){
-      if(e) {
-        if(errorHandler) {
-          errorHandler(e, testOrModule)
-          cb(null)
-        } else {
-          cb(e)
-        }
-      } else {
-        cb(null)
-      }
-    })
   }
 }
 
