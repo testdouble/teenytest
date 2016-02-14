@@ -25,11 +25,11 @@ module.exports = function(testGlob, userOptions, cb) {
   var testSuiteErrorLogger = function(e, action){
     if(e) {
       thisTestSuitePassed = passed = false
-      log('# An error occurred in '+action.description)
-      log('#  ---')
-      log('#  message: '+e.message)
-      log('#  stacktrace:',e.stack)
-      log('#  ...')
+      log(' An error occurred in '+action.description)
+      log('  ---')
+      log('  message: '+e.message)
+      log('  stacktrace:',e.stack)
+      log('  ...')
     }
   }
   testSuiteActions = [
@@ -40,11 +40,11 @@ module.exports = function(testGlob, userOptions, cb) {
             testModuleErrorLogger = function(e, action){
               if(e) {
                 thisTestModulePassed = passed = false
-                log('# An error occurred in '+action.description)
-                log('#  ---')
-                log('#  message: '+e.message)
-                log('#  stacktrace:',e.stack)
-                log('#  ...')
+                log(' An error occurred in '+action.description)
+                log('  ---')
+                log('  message: '+e.message)
+                log('  stacktrace:',e.stack)
+                log('  ...')
               }
             }
         return [
@@ -55,11 +55,11 @@ module.exports = function(testGlob, userOptions, cb) {
                   testFunctionErrorLogger = function(e, action) {
                     if(e) {
                       thisTestPassed = passed = false
-                      log('# An error occurred in '+action.description)
-                      log('#  ---')
-                      log('#  message: '+e.message)
-                      log('#  stacktrace:',e.stack)
-                      log('#  ...')
+                      log(' An error occurred in '+action.description)
+                      log('  ---')
+                      log('  message: '+e.message)
+                      log('  stacktrace:',e.stack)
+                      log('  ...')
                     }
                   }
 
@@ -67,7 +67,7 @@ module.exports = function(testGlob, userOptions, cb) {
                 userActions.wrap(helper.beforeEach, addHookDescription('global beforeEach', test, i), testFunctionErrorLogger),
                 userActions.wrap(testModule.beforeEach, addHookDescription('beforeEach', test, i), testFunctionErrorLogger),
                 function(cb) {
-                  userActions.invoke(test.testFunction, test.context, function(e){
+                  userActions.invoke(test.testFunction, test, function(e){
                     if(!e && thisTestPassed && thisTestModulePassed && thisTestSuitePassed) {
                       log('ok '+test.description)
                     } else {
@@ -96,18 +96,20 @@ module.exports = function(testGlob, userOptions, cb) {
 
       async.series(testModuleActions, cb)
     },
-    userActions.wrap(helper.afterAll, {description: 'global test helper afterAll hook'}, testSuiteErrorLogger),
+    userActions.wrap(helper.afterAll, {description: 'global test helper afterAll hook'}, testSuiteErrorLogger)
   ]
 
   async.series(testSuiteActions, function(e) {
     if(e) {
+      passed = false
       log('A fatal error occurred!')
       log('  ---')
       log('  message: '+e.message)
       log('  stacktrace:',e.stack)
       log('  ...')
     }
-    cb(e)
+
+    cb(e, passed)
   })
 }
 

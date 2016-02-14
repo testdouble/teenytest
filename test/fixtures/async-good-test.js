@@ -2,16 +2,30 @@ var _ = require('lodash')
 var assert = require('assert')
 
 module.exports = {
+  beforeAll: function(done){
+    _.defer(function(){ this.hooks = ['A']; done() })
+  },
   beforeEach: function(done) {
+    _.defer(function(){ this.hooks.push('B'); done() })
+  },
+  firstTest: function(done) {
     _.defer(function(){
-      this.secret = 'panda'
+      assert.deepStrictEqual(this.hooks, ['A','B'])
       done()
     })
   },
-  aTest: function(done) {
+  secondTest: function(done) {
     _.defer(function(){
-      assert.equal(this.secret, 'panda')
-        console.log('hiiii')
+      assert.deepStrictEqual(this.hooks, ['A','B','C','B'])
+      done()
+    })
+  },
+  afterEach: function(done) {
+    _.defer(function(){ this.hooks.push('C'); done() })
+  },
+  afterAll: function(done) {
+    _.defer(function(){
+      assert.deepStrictEqual(this.hooks, ['A','B','C','B','C'])
       done()
     })
   }
