@@ -1,8 +1,8 @@
-var glob = require('glob')
 var _ = require('lodash')
 var path = require('path')
 var async = require('async')
 var userActionsFactory = require('./lib/user-actions-factory')
+var buildTestModules = require('./lib/build-test-modules')
 
 module.exports = function(testGlob, userOptions, cb) {
   if(arguments.length < 3) { cb = userOptions; userOptions = {} }
@@ -123,55 +123,7 @@ var buildTestHelper = function(helperPath, cwd) {
     }, helperPath ? require(path.resolve(cwd, helperPath)) : {})
 }
 
-var buildTestModules = function(testGlob, cwd) {
-  var currentTestOrdinal = 0
-  return _.map(glob.sync(testGlob), function(file) {
-    var testModule = require(path.resolve(cwd, file)),
-        tests = _.map(testFunctionsIn(testModule), function(testEntry, i) {
-          currentTestOrdinal++
 
-          return {
-            testFunction: testEntry.testFunction,
-            testName: testEntry.testName,
-            context: Object.create(null),
-            description: currentTestOrdinal+' - '+testSummaryDescription(file, testEntry.testName, i),
-            file: file
-          }
-        })
-
-    return {
-      tests: tests,
-      file: file,
-      beforeAll: testModule.beforeAll || function(){},
-      afterAll: testModule.afterAll || function(){},
-      beforeEach: testModule.beforeEach || function(){},
-      afterEach: testModule.afterEach || function(){}
-    }
-  })
-}
-
-var testFunctionsIn = function(testModule) {
-  if(_.isFunction(testModule)) {
-    return [{
-      testFunction: testModule,
-      testName: testModule.name
-    }]
-  } else {
-    return _(testModule).functions().
-      without('beforeEach','beforeAll','afterEach','afterAll').
-      map(function(testName){
-        return {
-          testFunction: testModule[testName],
-          testName: testName
-        }
-      }).
-      value()
-  }
-}
-
-var testSummaryDescription = function(file, testName, index) {
-  return (testName ? '"'+testName+'" - ' : '')+'test #'+(index+1)+' in `'+file+'`'
-}
 
 addHookDescription = function(hookType, testOrModule, index) {
   return addDescription(testOrModule, hookDescription(hookType, testOrModule, index))
