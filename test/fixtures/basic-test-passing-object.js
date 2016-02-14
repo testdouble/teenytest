@@ -1,4 +1,4 @@
 module.exports = {
-  bar: function(){},
-  baz: function(){}
+  bar: function () {},
+  baz: function () {}
 }

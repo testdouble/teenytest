@@ -9,7 +9,8 @@
     "url": "git+https://github.com/testdouble/teenytest.git"
   },
   "scripts": {
-    "test": "./test/support/runner.js && npm run test:example",
+    "test": "standard && npm run test:unit && npm run test:example",
+    "test:unit": "./test/support/runner.js",
     "test:example": "cd example && ../bin/teenytest | grep 'not ok 3 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`' && echo 'Good! Above error is expected'"
   },
   "keywords": [
@@ -30,5 +31,8 @@
     "glob": "^6.0.4",
     "lodash": "^4.2.1",
     "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "standard": "^6.0.5"
   }
 }

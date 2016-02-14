@@ -1,8 +1,8 @@
 var helper = require('./support/helper')
 var assert = require('assert')
 
-module.exports = function(cb) {
-  helper.run('test/fixtures/basic-*.js', function(er, result, log){
+module.exports = function (cb) {
+  helper.run('test/fixtures/basic-*.js', function (er, result, log) {
     assert.equal(result, true)
     log.assert(
       'TAP version 13',

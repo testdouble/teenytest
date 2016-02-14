@@ -1,1 +1,1 @@
-module.exports = function(){ throw 'poop' }
+module.exports = function () { throw new Error('poop') }
