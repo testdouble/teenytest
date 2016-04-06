@@ -33,7 +33,7 @@ We prefer including our script in the `scripts` section of our package.json:
 
 ``` json
 "scripts": {
-  "test": "teenytest 'test/lib/**/*.js'"
+  "test": "teenytest"
 }
 ```
 
@@ -44,7 +44,7 @@ $ npm test
 ```
 
 If you don't provide a glob argument to the CLI, teeny will default to searching
-for tests in `"test/lib/**/*.js"`
+for tests in `"test/lib/**/*.js"` and for a helper in `"test/helper.js"`
 
 
 ### via the API
