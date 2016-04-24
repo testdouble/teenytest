@@ -13,7 +13,7 @@ zero public-API and zero configuration. That's pretty teeny, by the sound of it!
 $ npm i --save-dev teenytest
 ```
 
-## via the CLI
+## Using the CLI
 
 teenytest includes a CLI, which can be run ad hoc with:
 
@@ -45,42 +45,6 @@ $ npm test
 
 If you don't provide a glob argument to the CLI, teeny will default to searching
 for tests in `"test/lib/**/*.js"` and for a helper in `"test/helper.js"`
-
-
-### via the API
-
-If you `require('teenytest')`, its exported function looks like:
-
-> teenytest(globOfTestPaths, [options], callback)
-
-The function takes a glob pattern describing where your tests are located and
-an options object with a few simple settings. If your tests pass, the callback's
-second argument will be `true`. If your tests fail, it will be `false`.
-
-Here's an example test script with every option set and a comment on the
-defaults:
-
-``` javascript
-#!/usr/bin/env node
-
-var teenytest = require('teenytest')
-
-teenytest('test/lib/**/*.js', {
-  helperPath: 'test/helper.js', // module that exports test hook functions (default: null)
-  output: console.log, // output for writing results
-  cwd: process.cwd(), // base path for test globs & helper path,
-  asyncTimeout: 5000, // milliseconds to wait before triggering failure of async tests & hooks
-  asyncInterval: 10 // milliseconds between polls to check completeness of async tests
-}, function(er, passing) {
-  process.exit(!er && passing ? 0 : 1)
-})
-```
-
-As you can see, the above script will bail with a non-zero exit code if the tests
-don't pass or if a fatal error occurs.
-
-While the API is asynchronous, but both sycnhronous and asynchronous tests are
-supported.
 
 ## Writing tests
 
@@ -222,4 +186,77 @@ teenytest's output is
 so its output can be reported on and aggregated with numerous supported
 continuous integration & reporting tools.
 
+### Coverage with istanbul
+
+If you're looking for code coverage, we recommend using
+[istanbul](https://github.com/gotwarlost/istanbul)'s CLI. To get started,
+install istanbul locally:
+
+```
+$ npm i --save-dev istanbul
+```
+
+Suppose you're currently running your teeny tests with:
+
+```
+$ $(npm bin)/teenytest "lib/**/*.test.js" --helper "test/unit-helper.js"
+```
+
+You can now generate a coverage report for the same test run with:
+
+```
+$ $(npm bin)/istanbul cover node_modules/teenytest/bin/teenytest -- "lib/**/*.test.js" --helper "test/unit-helper.js"
+```
+
+Note the use of `--` before the arguments intended for teenytest itself, which
+istanbul will forward along.
+
+You could also set up both as [npm scripts](https://docs.npmjs.com/misc/scripts)
+so you could run either `npm test` and `npm run test:cover` by specifying them
+in your package.json:
+
+``` json
+"scripts": {
+  "test": "teenytest \"lib/**/*.test.js\" --helper test/unit-helper.js",
+  "test:cover": "istanbul cover teenytest -- \"lib/**/*.test.js\" --helper test/unit-helper.js"
+}
+```
+
+## Other good stuff
+
+### Invoking teenytest via the API
+
+While it'd be unusual to need it, if you `require('teenytest')`, its exported
+function looks like:
+
+> teenytest(globOfTestPaths, [options], callback)
+
+The function takes a glob pattern describing where your tests are located and
+an options object with a few simple settings. If your tests pass, the callback's
+second argument will be `true`. If your tests fail, it will be `false`.
+
+Here's an example test script with every option set and a comment on the
+defaults:
+
+``` javascript
+#!/usr/bin/env node
+
+var teenytest = require('teenytest')
+
+teenytest('test/lib/**/*.js', {
+  helperPath: 'test/helper.js', // module that exports test hook functions (default: null)
+  output: console.log, // output for writing results
+  cwd: process.cwd(), // base path for test globs & helper path,
+  asyncTimeout: 5000, // milliseconds to wait before triggering failure of async tests & hooks
+  asyncInterval: 10 // milliseconds between polls to check completeness of async tests
+}, function(er, passing) {
+  process.exit(!er && passing ? 0 : 1)
+})
+```
+
+As you can see, the above script will bail with a non-zero exit code if the tests
+don't pass or if a fatal error occurs.
+
+While the API is asynchronous, but both sycnhronous and asynchronous tests are
+supported.
 
