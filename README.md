@@ -179,6 +179,28 @@ test file will run before or after all the tests in that same file).  The
 `beforeEach`/`afterEach` hooks, meanwhile will run before and after each test
 in the entire suite.
 
+## Running a single test
+
+If you'd like to just run one test from a file, you can do that, too!
+
+### Locating by name
+
+If you have a test in `test/foo-test.js` and it exports an object with functions
+`bar` and `baz`, you could tell teenytest to just run `baz` with:
+
+```
+$ teenytest test/foo-test.js#baz
+```
+
+The `#` character will split the glob on the left from the name on the right.
+
+This can even be used across multiple tests in a wildcard glob, allowing you to
+slice a CI build based on a particular concern, for instance, you could run all
+audit log tests across your project's modules so long as they name the test
+the same thing (e.g. `teenytest test/**/*.js#audit`) to run all of them at once,
+without necessarily having to split that concern into its own set of
+files or directories.
+
 ## Reporting
 
 teenytest's output is
