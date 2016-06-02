@@ -11,7 +11,7 @@
   "scripts": {
     "test": "standard && npm run test:unit && npm run test:example",
     "test:unit": "./test/support/runner.js",
-    "test:example": "cd example && ../bin/teenytest | grep 'not ok 3 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`' && echo 'Good! Above error is expected'"
+    "test:example": "cd example && ../bin/teenytest | grep 'not ok 5 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`' && echo 'Good! Above error is expected'"
   },
   "keywords": [
     "teeny",

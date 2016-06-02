@@ -2,15 +2,14 @@ var helper = require('./support/helper')
 var assert = require('assert')
 
 module.exports = function canSelectTestByName (cb) {
-  helper.run('example/test/lib/exporting-an-object.js#adds', function (er, result, log) {
+  helper.run('example/test/lib/multi-word-names.js#a long passing test name', function (er, result, log) {
     assert.equal(result, true)
     log.assert(
       'TAP version 13',
       '1..1',
-      'ok 1 - "adds" - test #1 in `example/test/lib/exporting-an-object.js`'
+      'ok 1 - "a long passing test name" - test #1 in `example/test/lib/multi-word-names.js`'
     )
-    assert(log.toString().indexOf('subtracts') === -1,
-      '#subtracts should not be run, but was')
+    assert(log.toString().indexOf('failing') === -1, 'The other test ran!')
     cb(er)
   })
 }
