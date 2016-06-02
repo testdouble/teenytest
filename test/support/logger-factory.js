@@ -9,6 +9,7 @@ module.exports = function () {
       log.push(_(arguments).toArray().join(' '))
     },
     read: function () { return log },
+    toString: function () { return log.join('\n') },
     assert: function () {
       var lines = _.toArray(arguments)
 
