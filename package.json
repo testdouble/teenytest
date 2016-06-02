@@ -9,7 +9,7 @@
     "url": "git+https://github.com/testdouble/teenytest.git"
   },
   "scripts": {
-    "test": "standard && npm run test:unit && npm run test:example",
+    "test": "npm run test:unit && npm run test:example && standard",
     "test:unit": "./test/support/runner.js",
     "test:example": "cd example && ../bin/teenytest | grep 'not ok 5 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`' && echo 'Good! Above error is expected'"
   },
