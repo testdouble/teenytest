@@ -179,7 +179,7 @@ test file will run before or after all the tests in that same file).  The
 `beforeEach`/`afterEach` hooks, meanwhile will run before and after each test
 in the entire suite.
 
-## Running a single test
+## Filtering which tests are run
 
 If you'd like to just run one test from a file, you can do that, too!
 
@@ -200,6 +200,16 @@ audit log tests across your project's modules so long as they name the test
 the same thing (e.g. `teenytest test/**/*.js#audit`) to run all of them at once,
 without necessarily having to split that concern into its own set of
 files or directories.
+
+### Locating by line number
+
+Suppose you have a test in `test/bar-test.js` and you want to run the test on
+line 14 (whether that's the line number where the function is declared, or just
+some line inside the exported test function). You can run just that test with:
+
+```
+$ teenytest test/bar-test.js:14
+```
 
 ## Reporting
 
