@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-var teenytest = require('../index'),
+var _ = require('lodash'),
+    teenytest = require('../index'),
     argv = require('minimist')(process.argv.slice(2))
-    testGlob = argv['_'][0] || 'test/lib/**/*.js',
+    testGlob = _.last(argv['_']) || 'test/lib/**/*.js',
     helperPath = argv['helper'] || 'test/helper.js',
     fs = require('fs')
 
