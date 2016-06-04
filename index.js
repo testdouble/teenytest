@@ -18,9 +18,9 @@ module.exports = function (testGlob, userOptions, cb) {
   var testModules = buildTestModules(testGlob, cwd)
 
   log('TAP version 13')
-  log('1..' + _(testModules).map('tests.length').sum())
+  log('1..' + testModules.count)
 
-  runner(buildTestActions(testModules, helper), userFunctionAsyncWrapperFactory(options, log), function (e, result) {
+  runner(buildTestActions(testModules.modules, helper), userFunctionAsyncWrapperFactory(options, log), function (e, result) {
     if (e) {
       log('A fatal error occurred!')
       log('  ---')
