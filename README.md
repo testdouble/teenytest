@@ -29,22 +29,31 @@ both of these by providing arguments, as well:
 $ $(npm bin)/teenytest "test/lib/**/*.js" --helper "test/helper.js"
 ```
 
+### As an npm script
+
 We prefer including our script in the `scripts` section of our package.json:
 
 ``` json
 "scripts": {
-  "test": "teenytest"
+  "test": "teenytest **/*.test.js --helper test/support/helper.js"
 }
 ```
 
-With that configuration, you can run your tests with:
+With that configuration above, you could run all your tests with:
 
 ```
 $ npm test
 ```
 
-If you don't provide a glob argument to the CLI, teeny will default to searching
-for tests in `"test/lib/**/*.js"` and for a helper in `"test/helper.js"`
+If you want to run a single test, you can just tack an additional glob on at the
+end without looking at how teenytest is configured in the package.json:
+
+```
+$ npm test path/to/my.test.js
+```
+
+The above will ignore the glob embedded in the npm script and only run
+`path/to/my.test.js`.
 
 ## Writing tests
 
@@ -179,11 +188,13 @@ test file will run before or after all the tests in that same file).  The
 `beforeEach`/`afterEach` hooks, meanwhile will run before and after each test
 in the entire suite.
 
-## Filtering which tests are run
+## Advanced CLI Usage
+
+### Filtering which tests are run
 
 If you'd like to just run one test from a file, you can do that, too!
 
-### Locating by name
+#### Locating by name
 
 If you have a test in `test/foo-test.js` and it exports an object with functions
 `bar` and `baz`, you could tell teenytest to just run `baz` with:
@@ -201,7 +212,7 @@ the same thing (e.g. `teenytest test/**/*.js#audit`) to run all of them at once,
 without necessarily having to split that concern into its own set of
 files or directories.
 
-### Locating by line number
+#### Locating by line number
 
 Suppose you have a test in `test/bar-test.js` and you want to run the test on
 line 14 (whether that's the line number where the function is declared, or just
