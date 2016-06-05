@@ -13,5 +13,6 @@ module.exports = {
     afterAll: function () { global.__results.push('I') }
   },
   afterEach: function () { global.__results.push('J') },
-  afterAll: function () { global.__results.push('K'); console.log(global.__results) }
+  afterAll: function () { global.__results.push('K') },
+  test4: function () { global.__results.push('L') }
 }
