@@ -2,6 +2,7 @@ var _ = require('lodash')
 var buildTestModules = require('./lib/build-test-modules')
 var buildTestActions = require('./lib/build-test-actions')
 var buildTestHelper = require('./lib/build-test-helper')
+var countTests = require('./lib/count-tests')
 var runner = require('./lib/runner')
 var userFunctionAsyncWrapperFactory = require('./lib/user-function-async-wrapper-factory.js')
 
@@ -18,9 +19,9 @@ module.exports = function (testGlob, userOptions, cb) {
   var testModules = buildTestModules(testGlob, cwd)
 
   log('TAP version 13')
-  log('1..' + testModules.count)
+  log('1..' + countTests(testModules))
 
-  runner(buildTestActions(testModules.modules, helper), userFunctionAsyncWrapperFactory(options, log), function (e, result) {
+  runner(buildTestActions(testModules, helper), userFunctionAsyncWrapperFactory(options, log), function (e, result) {
     if (e) {
       log('A fatal error occurred!')
       log('  ---')
