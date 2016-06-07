@@ -3,7 +3,6 @@ var assert = require('assert')
 
 module.exports = function (cb) {
   helper.run('test/fixtures/nested-test.js', function (er, result, log) {
-    //return cb(null) // FIXME: DISABLE TEST
     assert.equal(result, true)
     log.assert(
       'TAP version 13',
@@ -15,7 +14,7 @@ module.exports = function (cb) {
     )
 
     // Make sure all the hooks ran as expected
-    assert.deepEqual(global.__results,[
+    assert.deepEqual(global.__results, [
       'A', // top beforeAll
       'B', // top beforeEach
       'C', // top "test1"
@@ -35,11 +34,10 @@ module.exports = function (cb) {
       'B', // top beforeEach
       'L', // "test4"
       'J', // top afterEach
-      'K', // top afterAll
+      'K' // top afterAll
     ])
     delete global.__results
     cb(er)
   })
-
 }
 
