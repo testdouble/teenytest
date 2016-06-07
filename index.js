@@ -2,11 +2,13 @@ var _ = require('lodash')
 var buildTestModules = require('./lib/build-test-modules')
 var buildTestActions = require('./lib/build-test-actions')
 var buildTestHelper = require('./lib/build-test-helper')
+var criteriaFor = require('./lib/criteria-for')
+var filterSelectedTests = require('./lib/filter-selected-tests')
 var countTests = require('./lib/count-tests')
 var runner = require('./lib/runner')
 var userFunctionAsyncWrapperFactory = require('./lib/user-function-async-wrapper-factory.js')
 
-module.exports = function (testGlob, userOptions, cb) {
+module.exports = function (testLocator, userOptions, cb) {
   if (arguments.length < 3) { cb = userOptions; userOptions = {} }
   var cwd = userOptions.cwd || process.cwd()
   var helper = buildTestHelper(userOptions.helperPath, cwd)
@@ -16,7 +18,12 @@ module.exports = function (testGlob, userOptions, cb) {
     asyncInterval: 10
   }, userOptions, helper.options)
   var log = options.output
-  var testModules = buildTestModules(testGlob, cwd)
+  var criteria = criteriaFor(testLocator)
+  var testModules = filterSelectedTests(
+      buildTestModules(criteria.glob, cwd),
+      criteria,
+      cwd
+  )
 
   log('TAP version 13')
   log('1..' + countTests(testModules))
