@@ -4,6 +4,7 @@ var buildTestActions = require('./lib/build-test-actions')
 var buildTestHelper = require('./lib/build-test-helper')
 var criteriaFor = require('./lib/criteria-for')
 var filterSelectedTests = require('./lib/filter-selected-tests')
+var cullTestlessGroups = require('./lib/cull-testless-groups')
 var countTests = require('./lib/count-tests')
 var runner = require('./lib/runner')
 var userFunctionAsyncWrapperFactory = require('./lib/user-function-async-wrapper-factory.js')
@@ -19,10 +20,12 @@ module.exports = function (testLocator, userOptions, cb) {
   }, userOptions, helper.options)
   var log = options.output
   var criteria = criteriaFor(testLocator)
-  var testModules = filterSelectedTests(
+  var testModules = cullTestlessGroups(
+    filterSelectedTests(
       buildTestModules(criteria.glob, cwd),
       criteria,
       cwd
+    )
   )
 
   log('TAP version 13')

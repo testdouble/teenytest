@@ -3,7 +3,6 @@ var assert = require('assert')
 
 module.exports = function (cb) {
   helper.run('test/fixtures/nested-sparse-test.js#woot', function (er, result, log) {
-    console.log("YA", log.toString())
     assert.equal(result, true)
     log.assert(
       'TAP version 13',
