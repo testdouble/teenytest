@@ -11,7 +11,9 @@ module.exports = {
       },
       z: {
         beforeAll: function () { throw new Error('z1') },
-        beforeEach: function () { throw new Error('z2') }
+        beforeEach: function () { throw new Error('z2') },
+        afterEach: function () { throw new Error('z3') },
+        afterAll: function () { throw new Error('z4') }
       }
     }
   }
