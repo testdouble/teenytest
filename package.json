@@ -1,6 +1,6 @@
 {
   "name": "teenytest",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "A teeny tiny test runner",
   "main": "index.js",
   "bin": "bin/teenytest",
