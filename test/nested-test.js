@@ -3,7 +3,7 @@ var assert = require('assert')
 
 module.exports = function (cb) {
   helper.run('test/fixtures/nested-test.js', function (er, result, log) {
-    return cb(null) // FIXME: DISABLE TEST
+    //return cb(null) // FIXME: DISABLE TEST
     assert.equal(result, true)
     log.assert(
       'TAP version 13',
