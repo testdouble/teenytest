@@ -45,8 +45,8 @@ With that configuration above, you could run all your tests with:
 $ npm test
 ```
 
-If you want to run a single test, you can just tack an additional glob on at the
-end without looking at how teenytest is configured in the package.json:
+If you want to run a single test, you can just tack an additional path or glob
+at the end without looking at how teenytest is configured in the package.json:
 
 ```
 $ npm test path/to/my.test.js
@@ -57,11 +57,18 @@ The above will ignore the glob embedded in the npm script and only run
 
 ## Writing tests
 
-Your tests can export either a test function or an object of test functions.
+### Test styles
 
-### Exporting a function
+Our tests are just Node.js modules. Rather than specify your tests via a fancy
+testing API, whatever your test modules sets onto `module.exports` will determine
+how teenytest will run the test. Modules can export either a single test
+function or an object of (potentially nested) test functions.
 
-If you export a single function, that function will be run as a single test. Note
+Read on for examples.
+
+#### Single function tests
+
+If you export a function, that function will be run as a single test. Note
 that you'll get better test output if you name the function.
 
 ``` javascript
@@ -88,7 +95,7 @@ not ok 1 - "blueIsRed" - test #1 in `test/lib/single-function.js`
   ...
 ```
 
-### Exporting an object
+#### Exporting an object of test functions
 
 If you export an object, you can include as many tests as you like. You can also
 implement any or all of the four supported test hooks: `beforeEach`, `afterEach`,
@@ -127,9 +134,62 @@ I'll run twice - once after each test
 I'll run once after both tests
 ```
 
+#### Nested tests
+
+Nested tests are also supported, in which any object can contain any combination
+of hooks, test functions, and additional sub-tests objects. This makes nested
+teenytest modules very similar to what's possible with "BDD"-like test libraries
+(in what are traditionally referred to as "example groups" by RSpec, Jasmine,
+and Mocha parlance).
+
+A common rationale for writing nested tests is to define one nested set of tests
+for each public method on a subject, for better symmetry between the test and the
+subject.
+
+Let's see an [example](example/test/lib/dog-test.js). Given this test in
+`test/lib/dog-test.js`:
+
+``` js
+var assert = require('assert')
+var Dog = require('../../lib/dog')
+
+module.exports = {
+  beforeEach: function () {
+    this.subject = new Dog('Sam')
+  },
+  bark: {
+    once: function () {
+      assert.deepEqual(this.subject.bark(1), ['Woof #0'])
+    },
+    twice: function () {
+      assert.deepEqual(this.subject.bark(2), ['Woof #0', 'Woof #1'])
+    }
+  },
+  tag: {
+    frontSaysName: function () {
+      assert.equal(this.subject.tag('front'), 'Hi, I am Sam')
+    },
+    backSaysAddress: function () {
+      assert.equal(this.subject.tag('back'), 'And here is my address')
+    }
+  }
+}
+```
+
+You'll get this output upon running `$ teenytest test/lib/dog-test.js`:
+
+```
+TAP version 13
+1..4
+ok 1 - "bark once" - test #1 in `example/test/lib/dog-test.js`
+ok 2 - "bark twice" - test #2 in `example/test/lib/dog-test.js`
+ok 3 - "tag frontSaysName" - test #3 in `example/test/lib/dog-test.js`
+ok 4 - "tag backSaysAddress" - test #4 in `example/test/lib/dog-test.js`
+```
+
 ### Writing asynchronous tests
 
-Any test hook or test function can also support asynchronous behavior, via a
+Any test hook or test function can also support asynchronous behavior via a
 callback function. To indicate that a function is asynchronous, add a function
 argument to the test method.
 
