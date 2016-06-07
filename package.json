@@ -13,7 +13,7 @@
     "test:unit": "./test/support/runner.js",
     "test:example": "npm run test:example:multiglob && npm run test:example:failure",
     "test:example:multiglob": "cd example && ../bin/teenytest test/lib/**/*.js test/lib/multi-word-names.js:10 | grep \"1\\.\\.1\"",
-    "test:example:failure": "cd example && ../bin/teenytest | grep 'not ok 5 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`' && echo 'Good! Above error is expected'"
+    "test:example:failure": "cd example && ../bin/teenytest | grep 'not ok 9 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`' && echo 'Good! Above error is expected'"
   },
   "keywords": [
     "teeny",
