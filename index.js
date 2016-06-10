@@ -44,3 +44,5 @@ module.exports = function (testLocator, userOptions, cb) {
   })
 }
 
+module.exports.plugins = require('./lib/plugins')
+
