@@ -20,7 +20,7 @@ module.exports = function (finalCallbackPhew) {
     wrappers: {
       test: function (runTest, metadata, cb) {
         runTest(function pendingTest(er) {
-          if (_.includes(['Pending', 'pending'], metadata.name) && !er) {
+          if (_.startsWith(metadata.name, '$') && !er) {
             cb(new Error(
               'Test "' + metadata.name + '" has "pending" in its name but it did' +
               ' not fail! Perhaps you have yet to implement a failing test or' +
@@ -36,11 +36,17 @@ module.exports = function (finalCallbackPhew) {
 
   teenytest.plugins.register({
     name: 'ignore',
+    type: 'wrapper',
     wrappers: {
       test: function (runTest, metadata, cb) {
-        if (_.startsWith(metadata.name, 'x') ||
-            _.some(metadata.suiteNames, function (suiteName) { return _.startsWith(metadata.name, 'x') }) ||
-            _.includes(['ignore', 'Ignore'], metadata.name)) {
+        if (_.startsWith(metadata.name, '!') {
+          cb(null)
+        } else {
+          runTest(cb)
+        }
+      },
+      suite: function (runTest, metadata, cb) {
+        if (_.startsWith(metadata.name, '!') {
           cb(null)
         } else {
           runTest(cb)
