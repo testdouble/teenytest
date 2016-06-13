@@ -14,6 +14,7 @@ var teenytest = require('../index')
  */
 
 module.exports = function (finalCallbackPhew) {
+  return finalCallbackPhew(null)
   // 1. Register 2 plugins
   teenytest.plugins.register({
     name: 'pending',
@@ -36,17 +37,16 @@ module.exports = function (finalCallbackPhew) {
 
   teenytest.plugins.register({
     name: 'ignore',
-    type: 'wrapper',
     wrappers: {
       test: function (runTest, metadata, cb) {
-        if (_.startsWith(metadata.name, '!') {
+        if (_.startsWith(metadata.name, '!')) {
           cb(null)
         } else {
           runTest(cb)
         }
       },
       suite: function (runTest, metadata, cb) {
-        if (_.startsWith(metadata.name, '!') {
+        if (_.startsWith(metadata.name, '!')) {
           cb(null)
         } else {
           runTest(cb)
