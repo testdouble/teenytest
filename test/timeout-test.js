@@ -3,8 +3,7 @@ var assert = require('assert')
 
 module.exports = function (cb) {
   helper.run('test/fixtures/timeout-test.js', {
-    asyncTimeout: 100,
-    asyncInterval: 5 // <-- this option is going away
+    asyncTimeout: 100
   }, function (er, result, log) {
     assert.equal(result, false)
     log.assert(
@@ -19,7 +18,6 @@ module.exports = function (cb) {
       'ok 3 - "fastEnough test3" - test #3 in `test/fixtures/timeout-test.js`',
       'ok 4 - "fastEnough test4" - test #4 in `test/fixtures/timeout-test.js`'
     )
-    console.log(log.read())
     cb(er)
   })
 }

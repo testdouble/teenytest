@@ -19,8 +19,7 @@ module.exports = function (testLocator, userOptions, cb) {
   var helper = buildTestHelper(userOptions.helperPath, cwd)
   var options = _.assign({}, {
     output: console.log,
-    asyncTimeout: 5000,
-    asyncInterval: 10
+    asyncTimeout: 5000
   }, userOptions, helper.options)
   var log = options.output
   var criteria = criteriaFor(testLocator)
@@ -38,7 +37,7 @@ module.exports = function (testLocator, userOptions, cb) {
   var uncaughtException = require('./lib/plugins/internal/uncaught-exception')
   pluginStore.register(uncaughtException())
   var timeout = require('./lib/plugins/internal/timeout')
-  pluginStore.register(timeout(options.asyncInterval, options.asyncTimeout))
+  pluginStore.register(timeout(options.asyncTimeout))
 
   // 4. run the tests
   log('TAP version 13')

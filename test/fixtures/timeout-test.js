@@ -15,7 +15,7 @@ module.exports = {
   fastEnough: {
     beforeEach: waiter(10),
     test2: waiter(20),
-    test3: function () { throw 'wat' },
+    test3: function () {},
     test4: waiter(50),
     afterEach: function () {}
   }

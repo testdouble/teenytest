@@ -236,8 +236,7 @@ module.exports = {
   afterEach: function(){},
   afterAll: function(){},
   options: {
-    asyncTimeout: 5000,
-    asyncInterval: 10
+    asyncTimeout: 5000
   }
 }
 ```
@@ -350,8 +349,7 @@ teenytest('test/lib/**/*.js', {
   helperPath: 'test/helper.js', // module that exports test hook functions (default: null)
   output: console.log, // output for writing results
   cwd: process.cwd(), // base path for test globs & helper path,
-  asyncTimeout: 5000, // milliseconds to wait before triggering failure of async tests & hooks
-  asyncInterval: 10 // milliseconds between polls to check completeness of async tests
+  asyncTimeout: 5000 // milliseconds to wait before triggering failure of async tests & hooks
 }, function(er, passing) {
   process.exit(!er && passing ? 0 : 1)
 })
