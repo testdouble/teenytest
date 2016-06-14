@@ -37,6 +37,8 @@ module.exports = function (testLocator, userOptions, cb) {
   // 3. do weird plugin stuff
   var uncaughtException = require('./lib/plugins/internal/uncaught-exception')
   pluginStore.register(uncaughtException())
+  var timeout = require('./lib/plugins/internal/timeout')
+  pluginStore.register(timeout(options.asyncInterval, options.asyncTimeout))
 
   // 4. run the tests
   log('TAP version 13')
