@@ -10,7 +10,9 @@ module.exports = {
     teenytest(glob, _.assign({}, {
       output: logger.write
     }, config), function (er, result) {
-      cb(er, result, logger)
+      process.nextTick(function () {
+        cb(er, result, logger)
+      })
     })
   }
 }
