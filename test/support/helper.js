@@ -20,7 +20,7 @@ module.exports = {
   deepEqual: function (actual, expected, msg) {
     try {
       assert.deepEqual(actual, expected, msg)
-    } catch(e) {
+    } catch (e) {
       console.log('Failed comparing actual:')
       console.log(actual)
       console.log('with expected:')
