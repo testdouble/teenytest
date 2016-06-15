@@ -7,12 +7,11 @@ module.exports = function (cb) {
     log.assert(
       'TAP version 13',
       '1..1',
-      ' An error occurred in test hook: module beforeEach defined in `test/fixtures/hook-fail.js`',
+      'not ok 1 - "thisIsNotOk" - test #1 in `test/fixtures/hook-fail.js`',
       '  ---',
       '  message: Bad hook do not run!',
       /stacktrace: Error: Bad hook do not run/,
-      '  ...',
-      'not ok 1 - "thisIsNotOk" - test #1 in `test/fixtures/hook-fail.js`'
+      '  ...'
     )
     cb(er)
   })
