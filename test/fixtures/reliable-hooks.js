@@ -23,6 +23,28 @@ module.exports = {
     test: mark('beforeAllFails.test'),
     afterEach: mark('beforeAllFails.afterEach'),
     afterAll: mark('beforeAllFails.afterAll')
+  },
+  beforeEachFails: {
+    nest: {
+      beforeAll: mark('beforeEachFails.nest.beforeAll'),
+      beforeEach: mark('beforeEachFails.nest.beforeEach'),
+      test: mark('beforeEachFails.nest.test'),
+      afterEach: mark('beforeEachFails.nest.afterEach'),
+      afterAll: mark('beforeEachFails.nest.afterAll')
+    },
+    beforeAll: mark('beforeEachFails.beforeAll'),
+    beforeEach: fail('beforeEachFails.beforeEach'),
+    test: mark('beforeEachFails.test'),
+    test2: mark('beforeEachFails.test2'),
+    afterEach: mark('beforeEachFails.afterEach'),
+    afterAll: mark('beforeEachFails.afterAll')
+  },
+  testFails: {
+    beforeAll: mark('testFails.beforeAll'),
+    beforeEach: mark('testFails.beforeEach'),
+    test: fail('testFails.test'),
+    afterEach: mark('testFails.afterEach'),
+    afterAll: mark('testFails.afterAll')
   }
 }
 
