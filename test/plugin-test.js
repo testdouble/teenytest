@@ -14,14 +14,18 @@ var teenytest = require('../index')
  */
 
 module.exports = function (finalCallbackPhew) {
-  return finalCallbackPhew(null)
   // 1. Register 2 plugins
   teenytest.plugins.register({
     name: 'pending',
     wrappers: {
       test: function (runTest, metadata, cb) {
         runTest(function pendingTest(er) {
-          if (_.startsWith(metadata.name, '$') && !er) {
+          if (_.startsWith(metadata.name, 'pending') && !er) {
+            // TODO Issue here is test-scoped plugins can't see any errors at all
+            // TODO one solution may be to provide a second arg to plugins runTest
+            // TODO cb that includes the results (nested passing + errors?)
+            // TODO how would we do that?
+            console.log("HEYO", metadata, er)
             cb(new Error(
               'Test "' + metadata.name + '" has "pending" in its name but it did' +
               ' not fail! Perhaps you have yet to implement a failing test or' +
@@ -39,14 +43,10 @@ module.exports = function (finalCallbackPhew) {
     name: 'ignore',
     wrappers: {
       test: function (runTest, metadata, cb) {
-        if (_.startsWith(metadata.name, '!')) {
-          cb(null)
-        } else {
-          runTest(cb)
-        }
-      },
-      suite: function (runTest, metadata, cb) {
-        if (_.startsWith(metadata.name, '!')) {
+        if (_.startsWith(metadata.name, 'ignore') ||
+            _.some(metadata.suiteNames, function (suiteName) {
+              return _.startsWith(suiteName, 'ignore')
+            })) {
           cb(null)
         } else {
           runTest(cb)
@@ -62,9 +62,9 @@ module.exports = function (finalCallbackPhew) {
       'TAP version 13',
       '1..5',
       'ok 1 - "ignoreThis" - test #1 in `test/fixtures/plugin-test.js`',
-      'ok 2 - "xMyTest" - test #2 in `test/fixtures/plugin-test.js`',
-      'ok 3 - "uhIgnoreMe andMe" - test #3 in `test/fixtures/plugin-test.js`',
-      'ok 4 - "explosionPending" - test #4 in `test/fixtures/plugin-test.js`',
+      'ok 2 - "ignoreMyTest" - test #2 in `test/fixtures/plugin-test.js`',
+      'ok 3 - "ignoreMySuite andMe" - test #3 in `test/fixtures/plugin-test.js`',
+      'ok 4 - "pendingExplosion" - test #4 in `test/fixtures/plugin-test.js`',
       'not ok 5 - "pendingButDone" - test #5 in `test/fixtures/plugin-test.js`',
       '  ---',
       '  message: Test "pendingButDone" has "pending" in its name but it did' +

@@ -4,10 +4,10 @@ module.exports = {
   ignoreThis: function (done) {
     done(new Error('Ignore me!'))
   },
-  xMyTest: function () {
+  ignoreMyTest: function () {
     throw new Error('No!')
   },
-  uhIgnoreMe: {
+  ignoreMySuite: {
     beforeEach: function (done) {
       setTimeout(function () {
         done(new Error('Bad hook do not run!'))
@@ -15,7 +15,7 @@ module.exports = {
     },
     andMe: function () {}
   },
-  explosionPending: function () {
+  pendingExplosion: function () {
     throw new Error('KABOOM')
   },
   pendingButDone: function () {
