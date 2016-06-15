@@ -1,4 +1,6 @@
 var _ = require('lodash')
+var assert = require('assert')
+
 var loggerFactory = require('./logger-factory')
 var teenytest = require('../../index')
 
@@ -14,5 +16,17 @@ module.exports = {
         cb(er, result, logger)
       })
     })
+  },
+  deepEqual: function (actual, expected, msg) {
+    try {
+      assert.deepEqual(actual, expected, msg)
+    } catch(e) {
+      console.log('Failed comparing actual:')
+      console.log(actual)
+      console.log('with expected:')
+      console.log(expected)
+      console.log('---')
+      throw e
+    }
   }
 }
