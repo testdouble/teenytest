@@ -5,10 +5,12 @@ var _ = require('lodash'),
     argv = require('minimist')(process.argv.slice(2))
     testGlob = _.last(argv['_']) || 'test/lib/**/*.js',
     helperPath = argv['helper'] || 'test/helper.js',
+    asyncTimeout = argv['timeout'] || 5000
     fs = require('fs')
 
 teenytest(testGlob, {
-  helperPath: fs.existsSync(helperPath) ? helperPath : null
+  helperPath: fs.existsSync(helperPath) ? helperPath : null,
+  asyncTimeout: asyncTimeout
 }, function(er, passing) {
   process.exit(!er && passing ? 0 : 1)
 })

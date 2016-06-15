@@ -281,6 +281,18 @@ some line inside the exported test function). You can run just that test with:
 $ teenytest test/bar-test.js:14
 ```
 
+### Setting a timeout
+
+By default, teenytest will allow 5 seconds for tests with asynchronous hooks or
+test functions to run before failing the test with a timeout error. To change
+this setting, set the `--timeout` flag in milliseconds:
+
+```
+$ teenytest --timeout 10000
+```
+
+The above will set the timeout to 10 seconds.
+
 ## Reporting
 
 teenytest's output is
