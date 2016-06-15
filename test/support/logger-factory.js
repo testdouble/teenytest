@@ -13,13 +13,19 @@ module.exports = function () {
     assert: function () {
       var lines = _.toArray(arguments)
 
-      _.each(lines, function (line, i) {
-        if (line instanceof RegExp) {
-          assert(line.test(log[i]), line.toString() + ' did not match: "' + log[i] + '"')
-        } else {
-          assert.equal(log[i], line)
-        }
-      })
+      try {
+        _.each(lines, function (line, i) {
+          if (line instanceof RegExp) {
+            assert(line.test(log[i]), line.toString() + ' did not match: "' + log[i] + '"')
+          } else {
+            assert.equal(log[i], line)
+          }
+        })
+      } catch (e) {
+        console.error('Error asserting the log. Full log follows:')
+        console.log(log)
+        throw e
+      }
     }
   }
 }
