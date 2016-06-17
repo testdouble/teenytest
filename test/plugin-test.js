@@ -25,7 +25,6 @@ module.exports = function (finalCallbackPhew) {
             // TODO one solution may be to provide a second arg to plugins runTest
             // TODO cb that includes the results (nested passing + errors?)
             // TODO how would we do that?
-            console.log("HEYO", metadata, er)
             cb(new Error(
               'Test "' + metadata.name + '" has "pending" in its name but it did' +
               ' not fail! Perhaps you have yet to implement a failing test or' +

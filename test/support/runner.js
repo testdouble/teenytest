@@ -16,5 +16,5 @@ async.series(_.map(glob.sync(globLocator), function (file) {
   }
 }), function (er) {
   if (er) { throw er }
-  console.log('looks good!')
+  console.log('Looks good!')
 })
