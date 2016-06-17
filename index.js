@@ -43,7 +43,7 @@ module.exports = function (testLocator, userOptions, cb) {
   log('TAP version 13')
   log('1..' + countTests(testModules))
 
-  runner(buildTestActions(testModules, helper), log, function (e, result) {
+  runner(buildTestActions(criteria.glob, testModules, helper), log, function (e, result) {
     if (e) {
       log('A fatal error occurred!')
       log('  ---')
