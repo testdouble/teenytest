@@ -7,7 +7,7 @@ module.exports = function (cb) {
     log.assert(
       'TAP version 13',
       '1..6',
-      ' An error occurred in test hook: module beforeAll defined in `test/fixtures/async-beforeAll-fails-all.js`',
+      ' An error occurred in test hook: "module beforeAll" defined in `test/fixtures/async-beforeAll-fails-all.js`',
       '  ---',
       '  message: nope',
       /stacktrace: Error: nope/,

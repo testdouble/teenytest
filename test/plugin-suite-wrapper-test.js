@@ -19,7 +19,7 @@ module.exports = function (cb) {
       '1..2',
       'ok 1 - "bar" - test #1 in `test/fixtures/basic-test-passing-object.js`',
       'ok 2 - "baz" - test #2 in `test/fixtures/basic-test-passing-object.js`',
-      ' An error occurred in suite: "module" in `test/fixtures/basic-test-passing-object.js`',
+      / An error occurred in suite: /,
       '  ---',
       '  message: lol',
       /stacktrace: Error: lol/,
