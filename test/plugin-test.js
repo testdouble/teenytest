@@ -43,7 +43,7 @@ module.exports = function (finalCallbackPhew) {
     wrappers: {
       test: function (runTest, metadata, cb) {
         if (_.startsWith(metadata.name, 'ignore') ||
-            _.some(metadata.suiteNames, function (suiteName) {
+            _.some(metadata.ancestorNames, function (suiteName) {
               return _.startsWith(suiteName, 'ignore')
             })) {
           cb(null)
