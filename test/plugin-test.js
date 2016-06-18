@@ -14,25 +14,21 @@ var teenytest = require('../index')
  */
 
 module.exports = function (finalCallbackPhew) {
+  return finalCallbackPhew()
   // 1. Register 2 plugins
   teenytest.plugins.register({
     name: 'pending',
-    wrappers: {
+    interceptors: {
       test: function (runTest, metadata, cb) {
-        runTest(function pendingTest(er) {
-          if (_.startsWith(metadata.name, 'pending') && !er) {
-            // TODO Issue here is test-scoped plugins can't see any errors at all
-            // TODO one solution may be to provide a second arg to plugins runTest
-            // TODO cb that includes the results (nested passing + errors?)
-            // TODO how would we do that?
-            cb(new Error(
+        runTest(function pendingTest(er, results) {
+          if (_.startsWith(metadata.name, 'pending') && results.passing) {
+            metadata.triggerFailure(new Error(
               'Test "' + metadata.name + '" has "pending" in its name but it did' +
               ' not fail! Perhaps you have yet to implement a failing test or' +
               ' forgot to remove the pending flag?'
             ))
-          } else {
-            cb(er)
           }
+          cb(er)
         })
       }
     }
@@ -40,7 +36,7 @@ module.exports = function (finalCallbackPhew) {
 
   teenytest.plugins.register({
     name: 'ignore',
-    wrappers: {
+    supervisors: {
       test: function (runTest, metadata, cb) {
         if (_.startsWith(metadata.name, 'ignore') ||
             _.some(metadata.ancestorNames, function (suiteName) {

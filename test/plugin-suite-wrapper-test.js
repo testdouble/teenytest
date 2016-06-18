@@ -4,7 +4,7 @@ var assert = require('assert')
 module.exports = function (cb) {
   require('../index').plugins.register({
     name: 'woah the suite will fail',
-    wrappers: {
+    supervisors: {
       suite: function (runSuite, metadata, cb) {
         runSuite(function (er) {
           cb(new Error('lol'))
