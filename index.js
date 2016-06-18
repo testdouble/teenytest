@@ -9,8 +9,8 @@ var cullTestlessGroups = require('./lib/cull-testless-groups')
 var countTests = require('./lib/count-tests')
 var runner = require('./lib/runner')
 
-var pluginStore = require('./lib/plugins/store')
-pluginStore.register(require('./lib/plugins/internal/done')())
+var pluginsStore = require('./lib/plugins/store')
+pluginsStore.register(require('./lib/plugins/internal/done')())
 
 module.exports = function (testLocator, userOptions, cb) {
   // 1. options setup
@@ -35,9 +35,9 @@ module.exports = function (testLocator, userOptions, cb) {
 
   // 3. do weird plugin stuff
   var uncaughtException = require('./lib/plugins/internal/uncaught-exception')
-  pluginStore.register(uncaughtException())
+  pluginsStore.register(uncaughtException())
   var timeout = require('./lib/plugins/internal/timeout')
-  pluginStore.register(timeout(options.asyncTimeout))
+  pluginsStore.register(timeout(options.asyncTimeout))
 
   // 4. run the tests
   log('TAP version 13')
@@ -56,4 +56,4 @@ module.exports = function (testLocator, userOptions, cb) {
   })
 }
 
-module.exports.plugins = pluginStore
+module.exports.plugins = pluginsStore
