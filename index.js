@@ -10,7 +10,6 @@ var countTests = require('./lib/count-tests')
 var runner = require('./lib/runner')
 
 var pluginsStore = require('./lib/plugins/store')
-pluginsStore.register(require('./lib/plugins/internal/done')())
 
 module.exports = function (testLocator, userOptions, cb) {
   // 1. options setup
@@ -33,27 +32,28 @@ module.exports = function (testLocator, userOptions, cb) {
     )
   )
 
-  // 3. do weird plugin stuff
-  var uncaughtException = require('./lib/plugins/internal/uncaught-exception')
-  pluginsStore.register(uncaughtException())
-  var timeout = require('./lib/plugins/internal/timeout')
-  pluginsStore.register(timeout(options.asyncTimeout))
+  // 3. run the tests
 
-  // 4. run the tests
+  // TODO - stick this into a TAP plugin as a preulde and fatal as a suite-wrap?
   log('TAP version 13')
   log('1..' + countTests(testModules))
 
-  runner(buildTestActions(criteria.glob, testModules, helper), log, function (e, result) {
-    if (e) {
-      log('A fatal error occurred!')
-      log('  ---')
-      log('  message: ' + e.message || e.toString())
-      log('  stacktrace:', e.stack)
-      log('  ...')
-    }
+  runner(
+    buildTestActions(criteria.glob, testModules, helper),
+    log,
+    options.asyncTimeout,
+    function (e, result) {
+      if (e) {
+        log('A fatal error occurred!')
+        log('  ---')
+        log('  message: ' + e.message || e.toString())
+        log('  stacktrace:', e.stack)
+        log('  ...')
+      }
 
-    cb(e, result)
-  })
+      cb(e, result)
+    }
+  )
 }
 
 module.exports.plugins = pluginsStore
