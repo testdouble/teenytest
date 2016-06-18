@@ -414,27 +414,26 @@ An example is teenytest's built-in timeout plugin, which guards against tests
 that take too long:
 
 ``` js
-module.exports = function (timeoutInMs) {
-  return {
-    name: 'teenytest-timeout',
-    supervisors: {
-      test: function (runTest, metadata, cb) {
-        var timedOut = false
-        var timer = setTimeout(function outtaTime () {
-          timedOut = true
-          cb(new Error('Test timed out! (timeout: ' + timeoutInMs + 'ms)'))
-        }, timeoutInMs)
+var timeoutInMs = 1000
+teenytest.plugins.register({
+  name: 'teenytest-timeout',
+  supervisors: {
+    test: function (runTest, metadata, cb) {
+      var timedOut = false
+      var timer = setTimeout(function outtaTime () {
+        timedOut = true
+        cb(new Error('Test timed out! (timeout: ' + timeoutInMs + 'ms)'))
+      }, timeoutInMs)
 
-        runTest(function timerWrappedCallback (er) {
-          if (!timedOut) {
-            clearTimeout(timer)
-            cb(er)
-          }
-        })
-      }
+      runTest(function timerWrappedCallback (er) {
+        if (!timedOut) {
+          clearTimeout(timer)
+          cb(er)
+        }
+      })
     }
   }
-}
+})
 ```
 
 ##### suite wrappers
