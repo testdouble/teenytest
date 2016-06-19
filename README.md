@@ -351,7 +351,7 @@ teenytest.plugins.register({
     test: function (runTest, metadata, cb) {
       runTest(function pendingTest(er, results) {
         if (_.startsWith(metadata.name, 'pending') && results.passing) {
-          metadata.triggerFailure(new Error('Pending should not pass!))
+          metadata.triggerFailure(new Error('Pending should not pass!'))
         }
         cb(er)
       })
