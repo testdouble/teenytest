@@ -1,6 +1,6 @@
 module.exports = function () {
   return {
-    name: 'testdouble-done',
+    name: 'teenytest-done',
     translators: {
       userFunction: function (runUserFunction, metadata, cb) {
         if (runUserFunction.length === 0) {

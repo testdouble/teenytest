@@ -1,6 +1,6 @@
 var _ = require('lodash')
 
-var Tap13 = require('../../report/tap13')
+var Tap13 = require('../lib/report/tap13')
 
 module.exports = function (log) {
   var tap13 = new Tap13(log)
