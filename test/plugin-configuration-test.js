@@ -43,7 +43,7 @@ function customizePlugins (cb) {
 }
 
 function run (projectDir, cb) {
-  test = spawn('npm', ['test'], {
+  var test = spawn('npm', ['test'], {
     cwd: path.resolve(process.cwd(), 'test/fixtures/projects/' + projectDir)
   })
 

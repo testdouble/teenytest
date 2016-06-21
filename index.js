@@ -19,7 +19,7 @@ module.exports = function (testLocator, userOptions, cb) {
   var helper = buildTestHelper(userOptions.helperPath, cwd)
   var options = _.defaults({}, helper.options, userOptions, defaultOptions())
   var log = options.output
-  var criteria = criteriaFor(testLocator)
+  var criteria = criteriaFor(testLocator || options.testLocator)
 
   // 2. Build test module structure
   var testModules = cullTestlessGroups(
@@ -38,8 +38,7 @@ module.exports = function (testLocator, userOptions, cb) {
 
   runner(
     buildTestActions(criteria.glob, testModules, helper),
-    log,
-    options.asyncTimeout,
+    options,
     function (e, result) {
       if (e) {
         log('A fatal error occurred!')

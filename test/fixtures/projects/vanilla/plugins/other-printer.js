@@ -4,7 +4,9 @@ module.exports = function () {
     analyzers: {
       suite: function (runSuite, metadata, cb) {
         runSuite(function (er) {
-          console.log('Sweet suite!')
+          if (metadata.name === 'global') {
+            console.log('Sweet suite!')
+          }
           cb(er)
         })
       }

@@ -34,7 +34,8 @@
     "glob": "^6.0.4",
     "lodash": "^4.13.1",
     "lodash-deeper": "^1.0.0",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "resolve": "^1.1.7"
   },
   "devDependencies": {
     "standard": "^6.0.5"
