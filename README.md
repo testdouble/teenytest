@@ -433,7 +433,7 @@ to teenytest:
 teenytest.plugins.register({
   name: 'promisify',
   translators: {
-    userFunction: (runUserFunction, metadata, cb) {
+    userFunction: function (runUserFunction, metadata, cb) {
       if (runUserFunction.length === 0) { //e.g. no callback specified
         var result = runUserFunction()
         if (typeof result === 'object' && typeof result.then === 'function') {
