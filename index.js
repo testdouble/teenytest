@@ -1,5 +1,6 @@
 var _ = require('lodash')
 
+var defaultOptions = require('./lib/cli/default-options')
 var buildTestHelper = require('./lib/build-test-helper')
 var criteriaFor = require('./lib/criteria-for')
 var buildTestModules = require('./lib/build-test-modules')
@@ -16,10 +17,7 @@ module.exports = function (testLocator, userOptions, cb) {
   if (arguments.length < 3) { cb = userOptions; userOptions = {} }
   var cwd = userOptions.cwd || process.cwd()
   var helper = buildTestHelper(userOptions.helperPath, cwd)
-  var options = _.assign({}, {
-    output: console.log,
-    asyncTimeout: 5000
-  }, userOptions, helper.options)
+  var options = _.defaults({}, helper.options, userOptions, defaultOptions())
   var log = options.output
   var criteria = criteriaFor(testLocator)
 

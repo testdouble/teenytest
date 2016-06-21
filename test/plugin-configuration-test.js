@@ -6,7 +6,7 @@ var assert = require('assert')
 var helper = require('./support/helper')
 
 module.exports = function (cb) {
-  async.series([
+  async.parallel([
     vanillaTest,
     customizePlugins
   ], cb)
