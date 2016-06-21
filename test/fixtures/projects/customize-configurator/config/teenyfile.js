@@ -11,7 +11,7 @@ module.exports = function (teenytest, cb) {
   assert.strictEqual(0, teenytest.plugins.wrappers('suite').length)
 
   teenytest.plugins.register(printerPlugin())
-  teenytest.plugins.register(otherPrinterPlugin())
+  teenytest.plugins.register(otherPrinterPlugin)
 
   teenytest.plugins.register(require('../../../../../plugins/done')())
   teenytest.plugins.register(require('../../../../../plugins/uncaught-exception')())
