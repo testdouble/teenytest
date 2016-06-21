@@ -22,8 +22,15 @@ module.exports = function () {
           }
         })
       } catch (e) {
-        console.error('Error asserting the log. Full log follows:')
-        console.log(log)
+        console.error('Error asserting the log')
+        console.error('Expected lines:')
+        console.error('---')
+        console.error(lines.join('\n'))
+        console.error('---')
+        console.error('Full log follows:')
+        console.error('---')
+        console.log(log.join('\n'))
+        console.error('---')
         throw e
       }
     }
