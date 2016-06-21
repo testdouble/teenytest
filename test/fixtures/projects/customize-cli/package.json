@@ -1,0 +1,10 @@
+{
+  "name": "customize-plugins",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "../../../../bin/teenytest --plugins \"['./plugins/printer']\" --configurator \"config/teenyfile\" \"test/**/*.js\""
+  },
+  "author": ""
+}

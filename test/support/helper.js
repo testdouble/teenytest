@@ -17,6 +17,18 @@ module.exports = {
       })
     })
   },
+  includes: function (actual, expected) {
+    try {
+      assert(_.includes(actual, expected))
+    } catch (e) {
+      console.log('Failed, wanting actual:')
+      console.log(actual)
+      console.log('to have contained:')
+      console.log(expected)
+      console.log('---')
+      throw e
+    }
+  },
   deepEqual: function (actual, expected, msg) {
     try {
       assert.deepEqual(actual, expected, msg)
