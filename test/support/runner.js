@@ -7,6 +7,7 @@ var async = require('async')
 var teenytest = require('../../index')
 
 var globLocator = process.argv[2] || 'test/*.js'
+var passing = false
 
 async.series(_.map(glob.sync(globLocator), function (file) {
   return function (cb) {
@@ -17,4 +18,13 @@ async.series(_.map(glob.sync(globLocator), function (file) {
 }), function (er) {
   if (er) { throw er }
   console.log('Looks good!')
+  passing = true
 })
+
+process.on('exit', function () {
+  if (!passing) {
+    console.error('You fail!')
+    process.exit(1)
+  }
+})
+
