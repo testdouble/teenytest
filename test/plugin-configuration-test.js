@@ -9,6 +9,7 @@ module.exports = function (cb) {
   async.parallel([
     vanillaTest,
     runWithPlugins('customize-plugins'),
+    runWithPlugins('customize-configurator'),
     runWithPlugins('customize-cli')
   ], cb)
 }
