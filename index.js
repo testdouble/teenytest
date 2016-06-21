@@ -7,7 +7,6 @@ var buildTestModules = require('./lib/build-test-modules')
 var buildTestActions = require('./lib/build-test-actions')
 var filterSelectedTests = require('./lib/filter-selected-tests')
 var cullTestlessGroups = require('./lib/cull-testless-groups')
-var countTests = require('./lib/count-tests')
 var runner = require('./lib/runner')
 
 var pluginsStore = require('./lib/plugins/store')
@@ -31,11 +30,6 @@ module.exports = function (testLocator, userOptions, cb) {
   )
 
   // 3. run the tests
-
-  // TODO - stick this into a TAP plugin as a preulde and fatal as a suite-wrap?
-  log('TAP version 13')
-  log('1..' + countTests(testModules))
-
   runner(
     buildTestActions(criteria.glob, testModules, helper),
     options,

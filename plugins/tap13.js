@@ -1,9 +1,11 @@
 var _ = require('lodash')
 
 var Tap13 = require('../lib/report/tap13')
+var countTests = require('../lib/count-tests')
 
 module.exports = function (log) {
   var tap13 = new Tap13(log)
+  var preludePrinted = false
 
   return {
     name: 'teenytest-tap13',
@@ -31,6 +33,10 @@ module.exports = function (log) {
         })
       },
       suite: function (runSuite, metadata, cb) {
+        if (!preludePrinted) {
+          tap13.prelude(countTests(metadata))
+          preludePrinted = true
+        }
         runSuite(function (er, result) {
           _(result.errors).filter(['metadata', metadata]).map('error').each(function (er) {
             tap13.error(er, 'suite: "' + metadata.name + '" in ' +
