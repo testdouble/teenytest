@@ -10,10 +10,21 @@ var globLocator = process.argv[2] || 'test/*.js'
 var passing = false
 
 async.series(_.map(glob.sync(globLocator), function (file) {
-  return function (cb) {
-    teenytest.plugins.unregisterAll()
-    console.log('Running test in "' + file + '"')
-    require(path.resolve(process.cwd(), file))(cb)
+  var metaTest = require(path.resolve(process.cwd(), file))
+  if (_.isFunction(metaTest)) {
+    return function (cb) {
+      teenytest.plugins.unregisterAll()
+      console.log('Running test in "' + file + '"')
+      metaTest(cb)
+    }
+  } else {
+    return function (cb) {
+      async.eachSeries(_.toPairs(metaTest), function (entry, cb) {
+        teenytest.plugins.unregisterAll()
+        console.log('Running test "' + entry[0] + '" in "' + file + '"')
+        entry[1](cb)
+      }, cb)
+    }
   }
 }), function (er) {
   if (er) { throw er }
