@@ -32,9 +32,6 @@ module.exports = function (log) {
       },
       suite: function (runSuite, metadata, cb) {
         runSuite(function (er, result) {
-          if (!result) {
-            console.log('wtf', metadata)
-          }
           _(result.errors).filter(['metadata', metadata]).map('error').each(function (er) {
             tap13.error(er, 'suite: "' + metadata.name + '" in ' +
                             '`' + metadata.file + '`')
