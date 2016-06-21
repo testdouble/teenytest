@@ -249,6 +249,52 @@ in the entire suite.
 
 ## Advanced CLI Usage
 
+### Configuration
+
+You can configure teenytest via CLI arguments or as properties of a `teenytest`
+object in your `package.json`. A full example follows:
+
+```
+$ $(npm bin)/teenytest \
+  --helper test/support/helper.js \
+  --timeout 3000 \
+  --configurator config/teenytest.js \
+  --plugin test/support/benchmark-plugin.js \
+  --plugin teenytest-promise \\
+  "lib/**/*.test.js"
+```
+
+The above is equivalent to the following `package.json` entry:
+
+``` json
+"teenytest": {
+  "testLocator": "lib/**/*.test.js",
+  "helper": "test/support/helper.js",
+  "timeout": 3000,
+  "configurator": "config/teenytest.js",
+  "plugins": [
+    "test/support/benchmark-plugin.js",
+    "teenytest-promise"
+  ]
+}
+```
+
+These options are available:
+
+* **testLocator** - [Default: `"test/lib/**/*.js"`] - the file glob teenytest
+should use to search for tests
+* **helper** - [Default: `"test/helper.js"`] - the location of your global test
+helper file
+* **timeout** - [Default: `5000`] - the maximum timeout (in milliseconds) for any
+given test in your suite
+* **configurator** - [Default: `undefined`] - a `require`-able path which exports
+a function that with parameters `(teenytest, cb)`. Configurator files may be used
+to run custom code just before the test runner executes the thest suite, register
+or unregister plugins with functions provided by `teenytest.plugins`, and must
+invoke the provided callback
+* **plugins** - [Default: `[]`] - an array of `require`-able paths which export
+either teenytest plugin objects or no-arg functions that return plugin objects
+
 ### Filtering which tests are run
 
 If you'd like to just run one test from a file, you can do that, too!
