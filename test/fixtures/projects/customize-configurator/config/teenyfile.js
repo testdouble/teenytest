@@ -13,7 +13,6 @@ module.exports = function (teenytest, cb) {
   teenytest.plugins.register(printerPlugin())
   teenytest.plugins.register(otherPrinterPlugin)
 
-  teenytest.plugins.register(require('../../../../../plugins/done')())
   teenytest.plugins.register(require('../../../../../plugins/uncaught-exception')())
   teenytest.plugins.register(require('../../../../../plugins/timeout')(5000))
   teenytest.plugins.register(require('../../../../../plugins/results')())

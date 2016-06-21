@@ -32,6 +32,11 @@ async.series(_.map(glob.sync(globLocator), function (file) {
   passing = true
 })
 
+process.on('uncaughtException', function (e) {
+  console.error('Uncaught error:')
+  console.error(e.message)
+  console.error(e.stack)
+})
 process.on('exit', function () {
   if (!passing) {
     console.error('You fail!')
