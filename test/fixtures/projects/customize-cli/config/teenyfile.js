@@ -1,5 +1,6 @@
 var otherPrinterPlugin = require('../plugins/other-printer')
 
-module.exports = function (teenytest) {
-  teenytest.plugins.register(otherPrinterPlugin)
+module.exports = function (teenytest, cb) {
+  teenytest.plugins.register(otherPrinterPlugin())
+  cb(null)
 }

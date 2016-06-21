@@ -3,7 +3,7 @@ var otherPrinterPlugin = require('../plugins/other-printer')
 
 var assert = require('assert')
 
-module.exports = function (teenytest) {
+module.exports = function (teenytest, cb) {
   // Do some shenanigans to verify things work as expected
   teenytest.plugins.unregisterAll()
   assert.equal(0, teenytest.plugins.wrappers('userFunction'))
@@ -18,4 +18,6 @@ module.exports = function (teenytest) {
   teenytest.plugins.register(require('../../../../plugins/timeout')(5000))
   teenytest.plugins.register(require('../../../../plugins/results')())
   teenytest.plugins.register(require('../../../../plugins/tap13')(console.log))
+
+  cb(null)
 }

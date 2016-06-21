@@ -8,6 +8,6 @@
   },
   "author": "",
   "teenytest": {
-    "configurator": "config/teenyfile"
+    "configurator": "./config/teenyfile"
   }
 }

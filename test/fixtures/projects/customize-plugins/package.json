@@ -9,7 +9,7 @@
   "author": "",
   "teenytest": {
     "plugins": [
-      "./plugins/printer",
+      "plugins/printer",
       "./plugins/other-printer"
     ]
   }
