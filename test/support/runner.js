@@ -8,6 +8,7 @@ var teenytest = require('../../index')
 
 var globLocator = process.argv[2] || 'test/*.js'
 var passing = false
+var uncaughtErrors = []
 
 async.series(_.map(glob.sync(globLocator), function (file) {
   var metaTest = require(path.resolve(process.cwd(), file))
@@ -33,12 +34,15 @@ async.series(_.map(glob.sync(globLocator), function (file) {
 })
 
 process.on('uncaughtException', function (e) {
-  console.error('Uncaught error:')
-  console.error(e.message)
-  console.error(e.stack)
+  uncaughtErrors.push(e)
 })
 process.on('exit', function () {
   if (!passing) {
+    _.each(uncaughtErrors, function (e) {
+      console.error('Uncaught error:')
+      console.error(e.message)
+      console.error(e.stack)
+    })
     console.error('You fail!')
     process.exit(1)
   }
