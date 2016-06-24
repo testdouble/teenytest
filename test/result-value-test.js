@@ -2,7 +2,6 @@ var helper = require('./support/helper')
 var assert = require('assert')
 
 module.exports = function (cb) {
-  return cb(null)
   global.__results = []
   helper.run('test/fixtures/returns-stuff.js', {
     plugins: ['test/fixtures/result-plugin',
@@ -17,37 +16,36 @@ module.exports = function (cb) {
       'ok 2 - "async" - test #2 in `test/fixtures/returns-stuff.js`'
     )
 
-    console.log("JUICE HERE", global.__results)
-    assert.deepEqual(global.__results, [
-      {
-        value: 'stuff',
-        error: undefined,
-        plugins: {
-          'result-plugin': {
-            value: 'Result: stuff',
-            error: undefined
-          },
-          'counter-plugin': {
-            value: 5,
-            error: undefined
-          }
-        }
-      },
-      {
-        value: 'other stuff',
-        error: undefined,
-        plugins: {
-          'result-plugin': {
-            value: 'Result: other stuff',
-            error: undefined
-          },
-          'counter-plugin': {
-            value: 8,
-            error: undefined
-          }
-        }
-      }
-    ])
+    var stuff = global.__results[0]
+    assert.equal(stuff.value, 'stuff')
+    assert.deepEqual(stuff.plugins.result, {
+      value: 'Result: stuff',
+      error: undefined
+    })
+    assert.deepEqual(stuff.plugins.counter, {
+      value: 5,
+      error: undefined
+    })
+    assert.deepEqual(stuff.plugins['gather-results'], {
+      value: undefined,
+      error: undefined
+    })
+
+    var otherStuff = global.__results[1]
+    assert.equal(otherStuff.value, 'other stuff')
+    assert.deepEqual(otherStuff.plugins.result, {
+      value: 'Result: other stuff',
+      error: undefined
+    })
+    assert.deepEqual(otherStuff.plugins.counter, {
+      value: 10,
+      error: undefined
+    })
+    assert.deepEqual(otherStuff.plugins['gather-results'], {
+      value: undefined,
+      error: undefined
+    })
+
     delete global.__results
     cb(er)
   })
