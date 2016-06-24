@@ -189,6 +189,8 @@ ok 4 - "tag backSaysAddress" - test #4 in `example/test/lib/dog-test.js`
 
 ### Writing asynchronous tests
 
+#### With callbacks
+
 Any test hook or test function can also support asynchronous behavior via a
 callback function. To indicate that a function is asynchronous, add a function
 argument to the test method.
@@ -216,6 +218,12 @@ module.exports = function(done) {
 A test failure can be triggered by either throwing an uncaught exception (which
 teenytest will be listening for during each asynchronous step) or by passing an
 `Error` as the first argument to `done`.
+
+#### With promises
+
+If you would prefer to return a promise to manage asynchronous tests, take a look
+at the [teenytest-promise](https://github.com/testdouble/teenytest-promise)
+plugin.
 
 ## Test Helper & Global Hooks
 
