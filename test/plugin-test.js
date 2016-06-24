@@ -2,48 +2,52 @@ var helper = require('./support/helper')
 var assert = require('assert')
 
 var _ = require('lodash')
-var teenytest = require('../index')
 
 module.exports = function (finalCallbackPhew) {
-  teenytest.plugins.register({
-    name: 'pending',
-    interceptors: {
-      test: function (runTest, metadata, cb) {
-        runTest(function pendingTest (er, result) {
-          if (_.startsWith(metadata.name, 'pending')) {
-            if (result.passing) {
-              result.triggerFailure(new Error(
-                'Test "' + metadata.name + '" has "pending" in its name but it did' +
-                ' not fail! Perhaps you have yet to implement a failing test or' +
-                ' forgot to remove the pending flag?'
-              ))
-            } else {
-              result.clearFailures()
+  var configurator = function (teenytest, cb) {
+    teenytest.plugins.register({
+      name: 'pending',
+      interceptors: {
+        test: function (runTest, metadata, cb) {
+          runTest(function pendingTest (er, result) {
+            if (_.startsWith(metadata.name, 'pending')) {
+              if (result.passing) {
+                result.triggerFailure(new Error(
+                  'Test "' + metadata.name + '" has "pending" in its name but it did' +
+                  ' not fail! Perhaps you have yet to implement a failing test or' +
+                  ' forgot to remove the pending flag?'
+                ))
+              } else {
+                result.clearFailures()
+              }
             }
-          }
-          cb(er)
-        })
-      }
-    }
-  })
-
-  teenytest.plugins.register({
-    name: 'ignore',
-    supervisors: {
-      test: function (runTest, metadata, cb) {
-        if (_.startsWith(metadata.name, 'ignore') ||
-            _.some(metadata.ancestorNames, function (suiteName) {
-              return _.startsWith(suiteName, 'ignore')
-            })) {
-          cb(null)
-        } else {
-          runTest(cb)
+            cb(er)
+          })
         }
       }
-    }
-  })
+    })
 
-  helper.run('test/fixtures/plugin-test.js', function (er, result, log) {
+    teenytest.plugins.register({
+      name: 'ignore',
+      supervisors: {
+        test: function (runTest, metadata, cb) {
+          if (_.startsWith(metadata.name, 'ignore') ||
+              _.some(metadata.ancestorNames, function (suiteName) {
+                return _.startsWith(suiteName, 'ignore')
+              })) {
+            cb(null)
+          } else {
+            runTest(cb)
+          }
+        }
+      }
+    })
+    cb(null)
+  }
+
+  helper.run('test/fixtures/plugin-test.js', {
+    configurator: configurator
+  }, function (er, result, log) {
     assert.equal(result, false)
     log.assert(
       'TAP version 13',

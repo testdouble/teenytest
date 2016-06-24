@@ -1,8 +1,11 @@
 var assert = require('assert')
 var teenytest = require('../index')
+var store = require('../lib/store')
 
 module.exports = {
   registeringIdenticalPluginMovesItToTheBack: function (cb) {
+    store.initialize()
+
     teenytest.plugins.register(somePlugin)
     teenytest.plugins.register(otherPlugin)
     assert.deepEqual(teenytest.plugins.list(), ['some-plugin', 'other-plugin'])
@@ -11,6 +14,8 @@ module.exports = {
     cb(null)
   },
   registeringSameNameDifferentPluginThrowsError: function (cb) {
+    store.initialize()
+
     teenytest.plugins.register(somePlugin)
     try {
       teenytest.plugins.register(someOtherPlugin)
@@ -23,6 +28,8 @@ module.exports = {
     }
   },
   registeringNamelessPlugin: function (cb) {
+    store.initialize()
+
     try {
       teenytest.plugins.register({})
       return cb(new Error('expected an error to be thrown'))

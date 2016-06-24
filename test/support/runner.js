@@ -4,7 +4,8 @@ var glob = require('glob')
 var path = require('path')
 var _ = require('lodash')
 var async = require('async')
-var teenytest = require('../../index')
+
+var store = require('../../lib/store')
 
 var globLocator = process.argv[2] || 'test/*.js'
 var passing = false
@@ -14,14 +15,14 @@ async.series(_.map(glob.sync(globLocator), function (file) {
   var metaTest = require(path.resolve(process.cwd(), file))
   if (_.isFunction(metaTest)) {
     return function (cb) {
-      teenytest.plugins.unregisterAll()
+      store.reset()
       console.log('Running test in "' + file + '"')
       metaTest(cb)
     }
   } else {
     return function (cb) {
       async.eachSeries(_.toPairs(metaTest), function (entry, cb) {
-        teenytest.plugins.unregisterAll()
+        store.reset()
         console.log('Running test "' + entry[0] + '" in "' + file + '"')
         entry[1](cb)
       }, cb)

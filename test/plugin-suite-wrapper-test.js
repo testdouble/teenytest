@@ -2,17 +2,22 @@ var helper = require('./support/helper')
 var assert = require('assert')
 
 module.exports = function (cb) {
-  require('../index').plugins.register({
-    name: 'woah the suite will fail',
-    supervisors: {
-      suite: function (runSuite, metadata, cb) {
-        runSuite(function (er) {
-          cb(new Error('lol'))
-        })
+  var configurator = function (teenytest, cb) {
+    teenytest.plugins.register({
+      name: 'woah the suite will fail',
+      supervisors: {
+        suite: function (runSuite, metadata, cb) {
+          runSuite(function (er) {
+            cb(new Error('lol'))
+          })
+        }
       }
-    }
-  })
-  helper.run('test/fixtures/basic-test-passing-obj*.js', function (er, result, log) {
+    })
+    cb(null)
+  }
+  helper.run('test/fixtures/basic-test-passing-obj*.js', {
+    configurator: configurator
+  }, function (er, result, log) {
     assert.equal(result, false)
     log.assert(
       'TAP version 13',
