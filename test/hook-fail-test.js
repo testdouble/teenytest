@@ -1,5 +1,5 @@
 var helper = require('./support/helper')
-var assert = require('assert')
+var assert = require('core-assert')
 
 module.exports = function (cb) {
   helper.run('test/fixtures/hook-fail.js', function (er, result, log) {

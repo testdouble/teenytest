@@ -1,5 +1,5 @@
 var helper = require('./support/helper')
-var assert = require('assert')
+var assert = require('core-assert')
 
 var _ = require('lodash')
 

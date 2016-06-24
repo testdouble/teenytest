@@ -1,4 +1,4 @@
-var assert = require('assert')
+var assert = require('core-assert')
 
 module.exports = {
   'a long passing test name': function () {

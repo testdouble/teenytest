@@ -1,5 +1,5 @@
 var _ = require('lodash')
-var assert = require('assert')
+var assert = require('core-assert')
 
 var loggerFactory = require('./logger-factory')
 var teenytest = require('../../index')

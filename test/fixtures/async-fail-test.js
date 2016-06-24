@@ -1,5 +1,5 @@
 var _ = require('lodash')
-var assert = require('assert')
+var assert = require('core-assert')
 
 module.exports = function (done) {
   _.defer(function () {

@@ -1,7 +1,7 @@
 var async = require('async')
 var spawn = require('child_process').spawn
 var path = require('path')
-var assert = require('assert')
+var assert = require('core-assert')
 
 var helper = require('./support/helper')
 
