@@ -1,16 +1,3 @@
 #!/usr/bin/env node
 
-var _ = require('lodash'),
-    teenytest = require('../index'),
-    argv = require('minimist')(process.argv.slice(2))
-    testGlob = _.last(argv['_']) || 'test/lib/**/*.js',
-    helperPath = argv['helper'] || 'test/helper.js',
-    fs = require('fs')
-
-teenytest(testGlob, {
-  helperPath: fs.existsSync(helperPath) ? helperPath : null
-}, function(er, passing) {
-  process.exit(!er && passing ? 0 : 1)
-})
-
-
+require('../lib/cli')()

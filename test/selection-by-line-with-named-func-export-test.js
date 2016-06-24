@@ -1,5 +1,5 @@
 var helper = require('./support/helper')
-var assert = require('assert')
+var assert = require('core-assert')
 
 module.exports = function (cb) {
   helper.run('test/fixtures/single-named-func.js:2', function (er, result, log) {

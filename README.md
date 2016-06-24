@@ -236,8 +236,7 @@ module.exports = {
   afterEach: function(){},
   afterAll: function(){},
   options: {
-    asyncTimeout: 5000,
-    asyncInterval: 10
+    asyncTimeout: 5000
   }
 }
 ```
@@ -249,6 +248,52 @@ test file will run before or after all the tests in that same file).  The
 in the entire suite.
 
 ## Advanced CLI Usage
+
+### Configuration
+
+You can configure teenytest via CLI arguments or as properties of a `teenytest`
+object in your `package.json`. A full example follows:
+
+```
+$ $(npm bin)/teenytest \
+  --helper test/support/helper.js \
+  --timeout 3000 \
+  --configurator config/teenytest.js \
+  --plugin test/support/benchmark-plugin.js \
+  --plugin teenytest-promise \\
+  "lib/**/*.test.js"
+```
+
+The above is equivalent to the following `package.json` entry:
+
+``` json
+"teenytest": {
+  "testLocator": "lib/**/*.test.js",
+  "helper": "test/support/helper.js",
+  "timeout": 3000,
+  "configurator": "config/teenytest.js",
+  "plugins": [
+    "test/support/benchmark-plugin.js",
+    "teenytest-promise"
+  ]
+}
+```
+
+These options are available:
+
+* **testLocator** - [Default: `"test/lib/**/*.js"`] - the file glob teenytest
+should use to search for tests
+* **helper** - [Default: `"test/helper.js"`] - the location of your global test
+helper file
+* **timeout** - [Default: `5000`] - the maximum timeout (in milliseconds) for any
+given test in your suite
+* **configurator** - [Default: `undefined`] - a `require`-able path which exports
+a function that with parameters `(teenytest, cb)`. Configurator files may be used
+to run custom code just before the test runner executes the thest suite, register
+or unregister plugins with functions provided by `teenytest.plugins`, and must
+invoke the provided callback
+* **plugins** - [Default: `[]`] - an array of `require`-able paths which export
+either teenytest plugin objects or no-arg functions that return plugin objects
 
 ### Filtering which tests are run
 
@@ -281,6 +326,18 @@ some line inside the exported test function). You can run just that test with:
 ```
 $ teenytest test/bar-test.js:14
 ```
+
+### Setting a timeout
+
+By default, teenytest will allow 5 seconds for tests with asynchronous hooks or
+test functions to run before failing the test with a timeout error. To change
+this setting, set the `--timeout` flag in milliseconds:
+
+```
+$ teenytest --timeout 10000
+```
+
+The above will set the timeout to 10 seconds.
 
 ## Reporting
 
@@ -327,6 +384,168 @@ in your package.json:
 
 ## Other good stuff
 
+### Building teenytest plugins
+
+Most of the runtime behavior in teenytest is implemented as plugins that
+wrap the functions, tests, and suites defined by the user. You can register
+your own plugin like this:
+
+``` js
+teenytest.plugins.register({
+  name: 'pending',
+  interceptors: {
+    test: function (runTest, metadata, cb) {
+      runTest(function pendingTest(er, results) {
+        if (_.startsWith(metadata.name, 'pending') && results.passing) {
+          metadata.triggerFailure(new Error('Pending should not pass!'))
+        }
+        cb(er)
+      })
+    }
+  }
+})
+```
+
+The above plugin will fail any tests whose name starts with "pending" but that
+actually passed. There are several types of plugins, but all of them follow the
+same theme of wrapping the users' own defined functions and (often nested)
+suites.
+
+There are two things to keep in mind when designing a plugin: wrapper scopes and
+lifecycle events.
+
+#### Plugin wrapper scopes
+
+There are three scopes of specificity each plugin can attach to: `userFunction`,
+`test`, and `suite`.
+
+##### userFunction wrappers
+
+A `userFunction` could be a hook like `beforeAll` or `afterEach` or an actual
+test function. If your plugin should augment or observe the actual behavior of
+the functions a user defines in their test listings, then you want to define a
+userFunction plugin.
+
+For example, a plugin below might be a starting point for adding promise support
+to teenytest:
+
+``` js
+teenytest.plugins.register({
+  name: 'promisify',
+  translators: {
+    userFunction: function (runUserFunction, metadata, cb) {
+      if (runUserFunction.length === 0) { //e.g. no callback specified
+        var result = runUserFunction()
+        if (typeof result === 'object' && typeof result.then === 'function') {
+          result.then(cb)
+        } else {
+          cb(null)
+        }
+      } else {
+        runUserFunction(cb)
+      }
+    }
+  }
+})
+
+```
+
+###### test wrappers
+
+Not to be confused with a test _function_, a `test` wrapper scope encompasses a
+test function _plus_ all its hooks. If your plugin is concerned with each test's
+results, you probably want a `test`-scoped wrapper.
+
+An example is teenytest's built-in timeout plugin, which guards against tests
+that take too long:
+
+``` js
+var timeoutInMs = 1000
+teenytest.plugins.register({
+  name: 'teenytest-timeout',
+  supervisors: {
+    test: function (runTest, metadata, cb) {
+      var timedOut = false
+      var timer = setTimeout(function outtaTime () {
+        timedOut = true
+        cb(new Error('Test timed out! (timeout: ' + timeoutInMs + 'ms)'))
+      }, timeoutInMs)
+
+      runTest(function timerWrappedCallback (er) {
+        if (!timedOut) {
+          clearTimeout(timer)
+          cb(er)
+        }
+      })
+    }
+  }
+})
+```
+
+##### suite wrappers
+
+Finally, plugins can also wrap the execution of entire suites of tests using the
+`suite` scope. This scope is most often necessary when your plugin wants to
+comprehend the overall test suite as a tree, and wants to visit each of the
+suites as nodes on the tree.
+
+This is certainly the least-used scoping, and is most likely to be needed by
+plugins that gather test results or report on them.
+
+#### Plugin lifecycle events
+
+The example above defines its wrapper under `interceptors`, because it needs to
+run after results have been initially determined but before the results have been
+logged to the console. Below are the available events to hook into:
+
+##### translators
+
+Wrapper functions defined under a plugin's `translators` property will run first,
+which should enable the author to augment the behavior of the test itself. For
+instance, one of the first plugins teenytest runs converts all of the user's
+functions to a consistent async callback API, regardless of whether the user
+function was asynchronous or not.
+
+##### supervisors
+
+Wrapper functions that desire to short-circuit or affect the failure/passing
+status of a test are implemented under a plugin's `supervisors` key. Two examples
+built into teenytest of this are a plugin that enforces a timeout for each test
+and another that catches uncaught exceptions (i.e. if the user throws error
+instead of passing it to the callback function).
+
+##### analyzers
+
+Wrapper functions that compute results are defined under the `analyzers` key of
+a plugin. Teenytest ships with a built-in results plugin & store that is probably
+fine for most purposes, but if you want to determine the results of your tests
+some other way, you would define your own `analyzers` wrappers.
+
+It's important to note that prior to the `analyzers` lifecycle event, all
+callbacks pass any test failure as an initial error argument, but—because
+the built-in results plugin can ensure recorded results are passed to subsequent
+plugin wrappers' callbacks—any errors up to this point will be swallowed and
+replaced with `null`. If a subsequent plugin wrapper passes an error to its own
+callback function, it will be interpreted by teenytest as a fatal error, aborting
+the test run.
+
+##### interceptors
+
+Sometimes a plugin that plays a supervisory role actually requires knowledge of
+a test's results in order to determine if a failure occurred. A classic example
+of this (and perhaps the only use case) are things like "pending test" features,
+where tests flagged as works-in-progress or "pending" should fail (because
+they've been marked by the user as unfinished). As a result, a pending test
+interceptor might trigger a failure for any pending test that passes (perhaps
+indicating to the user they need to write a failing test or unflag the test as
+no longer pending).
+
+##### reporters
+
+Reporter wrappers come after all the other plugins, using the provided
+results callback to write results. By default, teenytest writes out TAP13 to
+standard out, but a custom reporter could format results any way it likes.
+
 ### Invoking teenytest via the API
 
 While it'd be unusual to need it, if you `require('teenytest')`, its exported
@@ -350,8 +569,7 @@ teenytest('test/lib/**/*.js', {
   helperPath: 'test/helper.js', // module that exports test hook functions (default: null)
   output: console.log, // output for writing results
   cwd: process.cwd(), // base path for test globs & helper path,
-  asyncTimeout: 5000, // milliseconds to wait before triggering failure of async tests & hooks
-  asyncInterval: 10 // milliseconds between polls to check completeness of async tests
+  asyncTimeout: 5000 // milliseconds to wait before triggering failure of async tests & hooks
 }, function(er, passing) {
   process.exit(!er && passing ? 0 : 1)
 })

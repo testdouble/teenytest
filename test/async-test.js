@@ -1,5 +1,5 @@
 var helper = require('./support/helper')
-var assert = require('assert')
+var assert = require('core-assert')
 
 module.exports = function (cb) {
   helper.run('test/fixtures/async-*.js', function (er, result, log) {
@@ -7,13 +7,13 @@ module.exports = function (cb) {
     log.assert(
       'TAP version 13',
       '1..6',
-      ' An error occurred in test hook: module beforeAll defined in `test/fixtures/async-beforeAll-fails-all.js`',
+      ' An error occurred in test hook: "module beforeAll" defined in `test/fixtures/async-beforeAll-fails-all.js`',
       '  ---',
       '  message: nope',
       /stacktrace: Error: nope/,
       '  ...',
-      'not ok 1 - "test1" - test #1 in `test/fixtures/async-beforeAll-fails-all.js`',
-      'not ok 2 - "test2" - test #2 in `test/fixtures/async-beforeAll-fails-all.js`',
+      'not ok 1 - "test1" - test #1 in `test/fixtures/async-beforeAll-fails-all.js` [SKIPPED]',
+      'not ok 2 - "test2" - test #2 in `test/fixtures/async-beforeAll-fails-all.js` [SKIPPED]',
       'not ok 3 - test #1 in `test/fixtures/async-error-test.js`',
       '  ---',
       '  message: Something bad',
