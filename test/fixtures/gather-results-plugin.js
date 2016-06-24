@@ -1,14 +1,14 @@
 module.exports = {
-  name: 'result',
+  name: 'gather-results',
   translators: {
     userFunction: function (runUserFunction, metadata, cb) {
       runUserFunction(function (er, result) {
         if (metadata.subType === 'test') {
-          cb(er, 'Result: ' + result.value)
-        } else {
-          cb(er)
+          global.__results.push(result)
         }
+        cb(er)
       })
     }
   }
 }
+
