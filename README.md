@@ -430,25 +430,32 @@ For example, a plugin below might be a starting point for adding promise support
 to teenytest:
 
 ``` js
-teenytest.plugins.register({
-  name: 'promisify',
+module.exports = {
+  name: 'teenytest-promise',
   translators: {
     userFunction: function (runUserFunction, metadata, cb) {
-      if (runUserFunction.length === 0) { //e.g. no callback specified
-        var result = runUserFunction()
-        if (typeof result === 'object' && typeof result.then === 'function') {
-          result.then(cb)
+      runUserFunction(function (er, result) {
+        if (typeof result.value === 'object' &&
+            typeof result.value['then'] === 'function') {
+          result.value.then(
+            function promiseFulfilled (value) {
+              cb(er, value)
+            },
+            function promiseRejected (reason) {
+              cb(reason, null)
+            }
+          )
         } else {
-          cb(null)
+          cb(er)
         }
-      } else {
-        runUserFunction(cb)
-      }
+      })
     }
   }
-})
-
+}
 ```
+
+(The above is also the actual source listing of v1.0.0 of the
+[teenytest-promise](https://github.com/testdouble/teenytest-promise) module.)
 
 ###### test wrappers
 
