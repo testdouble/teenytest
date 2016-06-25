@@ -137,7 +137,7 @@ I'll run once after both tests
 #### Nested tests
 
 Nested tests are also supported, in which any object can contain any combination
-of hooks, test functions, and additional sub-tests objects. This makes nested
+of hooks, test functions, and additional sub-test objects. This makes nested
 teenytest modules very similar to what's possible with "BDD"-like test libraries
 (in what are traditionally referred to as "example groups" by RSpec, Jasmine,
 and Mocha parlance).
@@ -192,7 +192,7 @@ ok 4 - "tag backSaysAddress" - test #4 in `example/test/lib/dog-test.js`
 #### With callbacks
 
 Any test hook or test function can also support asynchronous behavior via a
-callback function. To indicate that a function is asynchronous, add a function
+callback function. To indicate that a function is asynchronous, add a callback
 argument to the test method.
 
 For instance, a synchronous test could:
