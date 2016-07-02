@@ -15,8 +15,9 @@ module.exports = function (testLocator, userOptions, cb) {
   // 1. options setup
   if (arguments.length < 3) { cb = userOptions; userOptions = {} }
   var cwd = userOptions.cwd || process.cwd()
-  var helper = buildTestHelper(userOptions.helperPath, cwd)
-  var options = _.defaults({}, helper.options, userOptions, defaultOptions())
+  var options = _.defaults({}, userOptions, defaultOptions())
+  var helper = buildTestHelper(options.helperPath, cwd)
+
   var log = options.output
   var criteria = criteriaFor(testLocator || options.testLocator)
 

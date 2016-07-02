@@ -242,10 +242,7 @@ module.exports = {
   beforeAll: function(){},
   beforeEach: function(){},
   afterEach: function(){},
-  afterAll: function(){},
-  options: {
-    asyncTimeout: 5000
-  }
+  afterAll: function(){}
 }
 ```
 
