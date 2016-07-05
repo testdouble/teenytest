@@ -1,6 +1,7 @@
 var _ = require('lodash')
 
 var defaultOptions = require('./lib/cli/default-options')
+var exitOnFailure = require('./lib/cli/exit-on-failure')
 var buildTestHelper = require('./lib/build-test-helper')
 var criteriaFor = require('./lib/criteria-for')
 var buildTestModules = require('./lib/build-test-modules')
@@ -13,7 +14,7 @@ var pluginsStore = require('./lib/plugins/store')
 
 module.exports = function (testLocator, userOptions, cb) {
   // 1. options setup
-  if (arguments.length < 3) { cb = userOptions; userOptions = {} }
+  if (arguments.length < 3) { cb = userOptions || exitOnFailure; userOptions = {} }
   var cwd = userOptions.cwd || process.cwd()
   var options = _.defaults({}, userOptions, defaultOptions())
   var helper = buildTestHelper(options.helperPath, cwd)
