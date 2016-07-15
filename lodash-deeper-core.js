@@ -1,4 +1,4 @@
-var _ = require('lodash')
+var _ = require('lodash/core')
 
 module.exports = {
   filterDeep: function filterDeep (collection, predicate) {
@@ -8,15 +8,19 @@ module.exports = {
   }
 }
 
-function deeplyFilters(collection, predicate, visited) {
+function deeplyFilters (collection, predicate, visited) {
   if (_.isObject(collection)) {
-    return _.filter(collection, predicate).concat(_.flatMap(collection, function (val) {
-      if(notYetTraversed(val, visited)) {
-        return deeplyFilters(val, predicate, visited.concat(collection))
-      } else {
-        return []
-      }
-    }))
+    return _.filter(collection, predicate).concat(
+      _.flatten(
+        _.map(collection, function (val) {
+          if (notYetTraversed(val, visited)) {
+            return deeplyFilters(val, predicate, visited.concat(collection))
+          } else {
+            return []
+          }
+        })
+      )
+    )
   } else {
     return []
   }
