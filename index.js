@@ -1,4 +1,4 @@
-var _ = require('lodash')
+var _ = require('lodash/core')
 
 var defaultOptions = require('./lib/cli/default-options')
 var buildTestHelper = require('./lib/build-test-helper')
