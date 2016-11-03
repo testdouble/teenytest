@@ -35,7 +35,7 @@ We prefer including our script in the `scripts` section of our package.json:
 
 ``` json
 "scripts": {
-  "test": "teenytest **/*.test.js --helper test/support/helper.js"
+  "test": "teenytest test/lib/**/*.js --helper test/helper.js"
 }
 ```
 
