@@ -1,4 +1,6 @@
-var _ = require('lodash')
+var _each = require('lodash/each')
+var _filter = require('lodash/filter')
+var _map = require('lodash/map')
 
 var Tap13 = require('../lib/report/tap13')
 var countTests = require('../lib/count-tests')
@@ -25,7 +27,7 @@ module.exports = function (log) {
             skipped: result.skipped
           })
 
-          _.each(result.errors, function (erObj) {
+          _each(result.errors, function (erObj) {
             tap13.error(erObj.error)
           })
 
@@ -38,7 +40,7 @@ module.exports = function (log) {
           preludePrinted = true
         }
         runSuite(function (er, result) {
-          _(result.errors).filter(['metadata', metadata]).map('error').each(function (er) {
+          _map(_filter(result.errors, ['metadata', metadata]), 'error').forEach(function (er) {
             tap13.error(er, 'suite: "' + metadata.name + '" in ' +
                             '`' + metadata.file + '`')
           })
