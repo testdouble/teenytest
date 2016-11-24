@@ -1,4 +1,4 @@
-var _ = require('lodash')
+var _ = require('lodash/core')
 
 var Tap13 = require('../lib/report/tap13')
 var countTests = require('../lib/count-tests')
@@ -38,7 +38,9 @@ module.exports = function (log) {
           preludePrinted = true
         }
         runSuite(function (er, result) {
-          _(result.errors).filter(['metadata', metadata]).map('error').each(function (er) {
+          _(result.errors).filter(function (er) {
+            return er.metadata === metadata
+          }).map('error').each(function (er) {
             tap13.error(er, 'suite: "' + metadata.name + '" in ' +
                             '`' + metadata.file + '`')
           })
