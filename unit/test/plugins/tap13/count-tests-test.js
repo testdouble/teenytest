@@ -1,4 +1,4 @@
-var subject = require('../../lib/count-tests')
+var subject = require('../../../../plugins/tap13/count-tests')
 
 module.exports = {
   "counts the number of deeply nested things with 'type' test": function () {

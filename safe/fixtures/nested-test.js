@@ -1,4 +1,4 @@
-global.__results
+global.__results = []
 
 module.exports = {
   beforeAll: function () { global.__results = []; global.__results.push('A') },

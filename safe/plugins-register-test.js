@@ -56,4 +56,3 @@ var otherPlugin = {
 var someOtherPlugin = {
   name: 'some-plugin'
 }
-

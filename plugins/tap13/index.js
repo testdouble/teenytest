@@ -1,7 +1,7 @@
 var _ = require('lodash')
 
-var Tap13 = require('../lib/report/tap13')
-var countTests = require('../lib/count-tests')
+var Tap13 = require('./builder')
+var countTests = require('./count-tests')
 
 module.exports = function (log) {
   var tap13 = new Tap13(log)

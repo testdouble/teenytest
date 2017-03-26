@@ -5,8 +5,8 @@ module.exports = function (cb) {
   global.__results = []
   helper.run('safe/fixtures/returns-stuff.js', {
     plugins: ['safe/fixtures/result-plugin',
-              'safe/fixtures/counter-plugin',
-              'safe/fixtures/gather-results-plugin']
+      'safe/fixtures/counter-plugin',
+      'safe/fixtures/gather-results-plugin']
   }, function (er, result, log) {
     assert.equal(result, true)
     log.assert(
@@ -50,4 +50,3 @@ module.exports = function (cb) {
     cb(er)
   })
 }
-

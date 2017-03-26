@@ -9,7 +9,7 @@
     "url": "git+https://github.com/testdouble/teenytest.git"
   },
   "scripts": {
-    "style": "standard",
+    "style": "standard --fix",
     "test": "npm run test:unit && npm run test:safe && npm run test:example && npm run style",
     "test:unit": "cd unit && npm install && npm test",
     "test:safe": "./safe/support/runner.js",
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "core-assert": "^0.2.0",
-    "standard": "^6.0.5"
+    "standard": "^9.0.2"
   },
   "standard": {
     "ignore": [

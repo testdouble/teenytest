@@ -1,51 +1,12 @@
-var _ = require('lodash')
-
-var defaultOptions = require('./lib/cli/default-options')
-var buildTestHelper = require('./lib/build-test-helper')
-var criteriaFor = require('./lib/criteria-for')
-var buildTestModules = require('./lib/build-test-modules')
-var buildTestActions = require('./lib/build-test-actions')
-var filterSelectedTests = require('./lib/filter-selected-tests')
-var cullTestlessGroups = require('./lib/cull-testless-groups')
-var runner = require('./lib/runner')
-
-var pluginsStore = require('./lib/plugins/store')
+var configure = require('./lib/configure')
+var prepare = require('./lib/prepare')
+var plan = require('./lib/plan')
+var run = require('./lib/run')
 
 module.exports = function (testLocator, userOptions, cb) {
-  // 1. options setup
   if (arguments.length < 3) { cb = userOptions; userOptions = {} }
-  var cwd = userOptions.cwd || process.cwd()
-  var options = _.defaults({}, userOptions, defaultOptions())
-  var helper = buildTestHelper(options.helperPath, cwd)
-
-  var log = options.output
-  var criteria = criteriaFor(testLocator || options.testLocator)
-
-  // 2. Build test module structure
-  var testModules = cullTestlessGroups(
-    filterSelectedTests(
-      buildTestModules(criteria.glob, cwd),
-      criteria,
-      cwd
-    )
-  )
-
-  // 3. run the tests
-  runner(
-    buildTestActions(criteria.glob, testModules, helper),
-    options,
-    function (e, result) {
-      if (e) {
-        log('A fatal error occurred!')
-        log('  ---')
-        log('  message: ' + e.message || e.toString())
-        log('  stacktrace:', e.stack)
-        log('  ...')
-      }
-
-      cb(e, result)
-    }
-  )
+  var config = configure(testLocator, userOptions)
+  run(plan(prepare(config)), config, cb)
 }
 
-module.exports.plugins = pluginsStore
+module.exports.plugins = require('./lib/plugins/store')
