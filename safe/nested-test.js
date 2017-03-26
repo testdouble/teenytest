@@ -2,15 +2,15 @@ var helper = require('./support/helper')
 var assert = require('core-assert')
 
 module.exports = function (cb) {
-  helper.run('test/fixtures/nested-test.js', function (er, result, log) {
+  helper.run('safe/fixtures/nested-test.js', function (er, result, log) {
     assert.equal(result, true)
     log.assert(
       'TAP version 13',
       '1..4',
-      'ok 1 - "test1" - test #1 in `test/fixtures/nested-test.js`',
-      'ok 2 - "sub test2" - test #2 in `test/fixtures/nested-test.js`',
-      'ok 3 - "sub test3" - test #3 in `test/fixtures/nested-test.js`',
-      'ok 4 - "test4" - test #4 in `test/fixtures/nested-test.js`'
+      'ok 1 - "test1" - test #1 in `safe/fixtures/nested-test.js`',
+      'ok 2 - "sub test2" - test #2 in `safe/fixtures/nested-test.js`',
+      'ok 3 - "sub test3" - test #3 in `safe/fixtures/nested-test.js`',
+      'ok 4 - "test4" - test #4 in `safe/fixtures/nested-test.js`'
     )
 
     // Make sure all the hooks ran as expected

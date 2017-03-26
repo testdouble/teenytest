@@ -9,8 +9,8 @@
     "url": "git+https://github.com/testdouble/teenytest.git"
   },
   "scripts": {
-    "test": "npm run test:unit && npm run test:example && standard",
-    "test:unit": "./test/support/runner.js",
+    "test": "npm run test:safe && npm run test:example && standard",
+    "test:safe": "./safe/support/runner.js",
     "test:example": "npm run test:example:multiglob && npm run test:example:failure",
     "test:example:multiglob": "cd example/simple-node && npm test -- test/lib/multi-word-names.js:10 | grep \"1\\.\\.1\"",
     "test:example:failure": "cd example/simple-node && npm test | grep 'not ok 9 - \"blueIsRed\" - test #1 in `test/lib/single-function.js`' && echo 'Good! Above error is expected'"

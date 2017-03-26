@@ -1,7 +1,7 @@
 var helper = require('./support/helper')
 
 module.exports = function (cb) {
-  helper.run('test/fixtures/reliable-hooks.js', function (er, result, log) {
+  helper.run('safe/fixtures/reliable-hooks.js', function (er, result, log) {
     // Without failure, it all runs (ofc)
     helper.deepEqual(global.__results.happy, {
       beforeAll: true,

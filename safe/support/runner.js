@@ -7,7 +7,7 @@ var async = require('async')
 
 var store = require('../../lib/store')
 
-var globLocator = process.argv[2] || 'test/*.js'
+var globLocator = process.argv[2] || 'safe/*.js'
 var passing = false
 var uncaughtErrors = []
 

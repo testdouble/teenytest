@@ -45,18 +45,18 @@ module.exports = function (finalCallbackPhew) {
     cb(null)
   }
 
-  helper.run('test/fixtures/plugin-test.js', {
+  helper.run('safe/fixtures/plugin-test.js', {
     configurator: configurator
   }, function (er, result, log) {
     assert.equal(result, false)
     log.assert(
       'TAP version 13',
       '1..5',
-      'ok 1 - "ignoreThis" - test #1 in `test/fixtures/plugin-test.js`',
-      'ok 2 - "ignoreMyTest" - test #2 in `test/fixtures/plugin-test.js`',
-      'ok 3 - "ignoreMySuite andMe" - test #3 in `test/fixtures/plugin-test.js`',
-      'ok 4 - "pendingExplosion" - test #4 in `test/fixtures/plugin-test.js`',
-      'not ok 5 - "pendingButDone" - test #5 in `test/fixtures/plugin-test.js`',
+      'ok 1 - "ignoreThis" - test #1 in `safe/fixtures/plugin-test.js`',
+      'ok 2 - "ignoreMyTest" - test #2 in `safe/fixtures/plugin-test.js`',
+      'ok 3 - "ignoreMySuite andMe" - test #3 in `safe/fixtures/plugin-test.js`',
+      'ok 4 - "pendingExplosion" - test #4 in `safe/fixtures/plugin-test.js`',
+      'not ok 5 - "pendingButDone" - test #5 in `safe/fixtures/plugin-test.js`',
       '  ---',
       '  message: Test "pendingButDone" has "pending" in its name but it did' +
         ' not fail! Perhaps you have yet to implement a failing test or' +

@@ -48,7 +48,7 @@ function runWithPlugins (name) {
 
 function run (projectDir, cb) {
   var test = spawn('npm', ['test'], {
-    cwd: path.resolve(process.cwd(), 'test/fixtures/projects/' + projectDir)
+    cwd: path.resolve(process.cwd(), 'safe/fixtures/projects/' + projectDir)
   })
 
   var log = ''
