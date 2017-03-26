@@ -19,4 +19,3 @@ Dog.prototype.tag = function (side) {
 }
 
 module.exports = Dog
-

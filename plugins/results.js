@@ -47,4 +47,3 @@ function shouldBeRun (resultsStore, metadata) {
          ) ||
          metadata.hookType === 'afterAll'
 }
-
