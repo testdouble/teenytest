@@ -1,4 +1,4 @@
-var resultsStore = require('../lib/report/results-store')
+var resultsStore = require('../lib/run/results-store')
 
 module.exports = function () {
   return {
