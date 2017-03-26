@@ -9,7 +9,9 @@
     "url": "git+https://github.com/testdouble/teenytest.git"
   },
   "scripts": {
-    "test": "npm run test:safe && npm run test:example && standard",
+    "style": "standard",
+    "test": "npm run test:unit && npm run test:safe && npm run test:example && npm run style",
+    "test:unit": "cd unit && npm install && npm test",
     "test:safe": "./safe/support/runner.js",
     "test:example": "npm run test:example:multiglob && npm run test:example:failure",
     "test:example:multiglob": "cd example/simple-node && npm test -- test/lib/multi-word-names.js:10 | grep \"1\\.\\.1\"",
@@ -40,5 +42,13 @@
   "devDependencies": {
     "core-assert": "^0.2.0",
     "standard": "^6.0.5"
+  },
+  "standard": {
+    "ignore": [
+      "/unit/node_modules"
+    ],
+    "global": [
+      "assert"
+    ]
   }
 }
