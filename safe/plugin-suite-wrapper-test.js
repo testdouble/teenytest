@@ -29,7 +29,7 @@ module.exports = function (cb) {
       '  message: lol',
       /stacktrace: Error: lol/,
       '  ...',
-      ' An error occurred in suite: "global" in `safe/fixtures/basic-test-passing-obj*.js`',
+      ' An error occurred in suite: "global" in `(top-level)`',
       '  ---',
       '  message: lol',
       /stacktrace: Error: lol/,
