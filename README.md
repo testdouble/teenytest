@@ -88,7 +88,7 @@ not ok 1 - "blueIsRed" - test #1 in `test/lib/single-function.js`
   ---
   message: 'blue' == 'red'
   stacktrace: AssertionError: 'blue' == 'red'
-    at blueIsRed (teenytest/example/test/lib/single-function.js:4:10)
+    at blueIsRed (teenytest/example/simple-node/test/lib/single-function.js:4:10)
     at teenytest/index.js:47:9
     ...
     at Module._compile (module.js:434:26)
@@ -146,7 +146,7 @@ A common rationale for writing nested tests is to define one nested set of tests
 for each public method on a subject, for better symmetry between the test and the
 subject.
 
-Let's see an [example](example/test/lib/dog-test.js). Given this test in
+Let's see an [example](example/simple-node/test/lib/dog-test.js). Given this test in
 `test/lib/dog-test.js`:
 
 ``` js
@@ -181,10 +181,10 @@ You'll get this output upon running `$ teenytest test/lib/dog-test.js`:
 ```
 TAP version 13
 1..4
-ok 1 - "bark once" - test #1 in `example/test/lib/dog-test.js`
-ok 2 - "bark twice" - test #2 in `example/test/lib/dog-test.js`
-ok 3 - "tag frontSaysName" - test #3 in `example/test/lib/dog-test.js`
-ok 4 - "tag backSaysAddress" - test #4 in `example/test/lib/dog-test.js`
+ok 1 - "bark once" - test #1 in `example/simple-node/test/lib/dog-test.js`
+ok 2 - "bark twice" - test #2 in `example/simple-node/test/lib/dog-test.js`
+ok 3 - "tag frontSaysName" - test #3 in `example/simple-node/test/lib/dog-test.js`
+ok 4 - "tag backSaysAddress" - test #4 in `example/simple-node/test/lib/dog-test.js`
 ```
 
 ### Assertions
