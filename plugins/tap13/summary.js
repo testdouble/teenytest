@@ -17,7 +17,7 @@ Summary.prototype.logTest = function (metadata, result) {
       description: metadata.description,
       errors: result.errors,
       setUpFailed: result.setUpFailed || result.skipped
-      //^ skipped is a misnomer. Right now only ever used if a beforeEach/all fails :-/
+      // ^ skipped is a misnomer. Right now only ever used if a beforeEach/all fails :-/
     })
   }
 }

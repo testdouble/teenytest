@@ -43,11 +43,11 @@ module.exports = function (cb) {
       '#',
       '#   3 - test #1 in `safe/fixtures/async-error-test.js`',
       '#',
-      /#     Error: Something bad/,
+      /# {5}Error: Something bad/,
       '#',
       '#   4 - test #1 in `safe/fixtures/async-fail-test.js`',
       '#',
-      /#     AssertionError: 98 == 42/
+      /# {5}AssertionError: 98 == 42/
     )
     cb(er)
   })

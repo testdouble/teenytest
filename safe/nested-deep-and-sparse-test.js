@@ -11,7 +11,18 @@ module.exports = function (cb) {
       'not ok 2 - "a b c d doh" - test #2 in `safe/fixtures/nested-sparse-test.js`',
       '  ---',
       '  message: Doh',
-      /stacktrace: Error: Doh/
+      /stacktrace: Error: Doh/,
+      '  ...',
+      '# Test run failed!',
+      '#   Passed: 1',
+      '#   Failed: 1',
+      '#   Total:  2',
+      '#',
+      '# Failures:',
+      '#',
+      '#   2 - "a b c d doh" - test #2 in `safe/fixtures/nested-sparse-test.js`',
+      '#',
+      /# {5}Error: Doh/
     )
     cb(er)
   })
