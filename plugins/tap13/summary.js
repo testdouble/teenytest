@@ -16,7 +16,8 @@ Summary.prototype.logTest = function (metadata, result) {
     this.failures.push({
       description: metadata.description,
       errors: result.errors,
-      setUpFailed: result.setupFailed
+      setUpFailed: result.setUpFailed || result.skipped
+      //^ skipped is a misnomer. Right now only ever used if a beforeEach/all fails :-/
     })
   }
 }
