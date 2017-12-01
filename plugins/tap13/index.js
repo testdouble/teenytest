@@ -2,10 +2,12 @@ var _ = require('lodash')
 
 var Tap13 = require('./builder')
 var countTests = require('./count-tests')
+var Summary = require('./summary')
 
 module.exports = function (log) {
   var tap13 = new Tap13(log)
   var preludePrinted = false
+  var summary = new Summary()
 
   return {
     name: 'teenytest-tap13',
@@ -20,6 +22,7 @@ module.exports = function (log) {
       },
       test: function (runTest, metadata, cb) {
         runTest(function (er, result) {
+          summary.logTest(metadata, result)
           tap13.test(metadata.description, {
             passing: result.passing,
             skipped: result.skipped
@@ -33,7 +36,9 @@ module.exports = function (log) {
         })
       },
       suite: function (runSuite, metadata, cb) {
+        var topLevelSuite = false
         if (!preludePrinted) {
+          topLevelSuite = true
           tap13.prelude(countTests(metadata))
           preludePrinted = true
         }
@@ -42,6 +47,9 @@ module.exports = function (log) {
             tap13.error(er, 'suite: "' + metadata.name + '" in ' +
                             '`' + metadata.file + '`')
           })
+          if (topLevelSuite) {
+            tap13.summarize(summary)
+          }
           cb(er)
         })
       }

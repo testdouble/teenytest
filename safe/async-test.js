@@ -25,7 +25,29 @@ module.exports = function (cb) {
       /stacktrace: AssertionError: 98 == 42/,
       '  ...',
       'ok 5 - "firstTest" - test #1 in `safe/fixtures/async-good-test.js`',
-      'ok 6 - "secondTest" - test #2 in `safe/fixtures/async-good-test.js`'
+      'ok 6 - "secondTest" - test #2 in `safe/fixtures/async-good-test.js`',
+      '# Test run failed!',
+      '#   Passed: 2',
+      '#   Failed: 4',
+      '#   Total:  6',
+      '#',
+      '# Failures:',
+      '#',
+      '#   1 - "test1" - test #1 in `safe/fixtures/async-beforeAll-fails-all.js`',
+      '#',
+      '#     A setup hook (beforeEach or beforeAll) failed so the test never ran',
+      '#',
+      '#   2 - "test2" - test #2 in `safe/fixtures/async-beforeAll-fails-all.js`',
+      '#',
+      '#     A setup hook (beforeEach or beforeAll) failed so the test never ran',
+      '#',
+      '#   3 - test #1 in `safe/fixtures/async-error-test.js`',
+      '#',
+      /# {5}Error: Something bad/,
+      '#',
+      '#   4 - test #1 in `safe/fixtures/async-fail-test.js`',
+      '#',
+      /# {5}AssertionError: 98 == 42/
     )
     cb(er)
   })

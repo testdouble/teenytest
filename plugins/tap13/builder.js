@@ -26,3 +26,34 @@ Tap13.prototype.error = function (er, standaloneDescription) {
   this.log('  stacktrace:', er.stack)
   this.log('  ...')
 }
+
+Tap13.prototype.summarize = function (summary) {
+  var p = this.log
+  p('# Test run ' + (summary.failed === 0 ? 'passed!' : 'failed!'))
+  p('#   Passed: ' + summary.passed)
+  p('#   Failed: ' + summary.failed)
+  p('#   Total:  ' + summary.total)
+
+  if (summary.failures.length > 0) {
+    p('#')
+    p('# Failures:')
+    _.each(summary.failures, function (failure) {
+      p('#')
+      p('#   ' + failure.description)
+      if (failure.setUpFailed) {
+        p('#')
+        p('#     A setup hook (beforeEach or beforeAll) failed so the test never ran')
+      }
+      _.each(failure.errors, function (errorObj) {
+        p('#')
+        if (errorObj.error.stack) {
+          p(_.map(errorObj.error.stack.split('\n'), function (stackLine) {
+            return '#     ' + stackLine
+          }).join('\n'))
+        } else {
+          p('#    Error: ' + errorObj.error)
+        }
+      })
+    })
+  }
+}
