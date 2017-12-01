@@ -9,7 +9,11 @@ module.exports = function (cb) {
       '1..3',
       'ok 1 - test #1 in `safe/fixtures/basic-test-passing-function.js`',
       'ok 2 - "bar" - test #1 in `safe/fixtures/basic-test-passing-object.js`',
-      'ok 3 - "baz" - test #2 in `safe/fixtures/basic-test-passing-object.js`'
+      'ok 3 - "baz" - test #2 in `safe/fixtures/basic-test-passing-object.js`',
+      '# Test run passed!',
+      '#   Run:    3',
+      '#   Passed: 3',
+      '#   Failed: 0'
     )
     cb(er)
   })

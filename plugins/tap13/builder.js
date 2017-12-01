@@ -26,3 +26,10 @@ Tap13.prototype.error = function (er, standaloneDescription) {
   this.log('  stacktrace:', er.stack)
   this.log('  ...')
 }
+
+Tap13.prototype.summarize = function (summary) {
+  this.log('# Test run ' + (summary.failed === 0 ? 'passed!' : 'failed!'))
+  this.log('#   Run:    ' + summary.total)
+  this.log('#   Passed: ' + summary.passed)
+  this.log('#   Failed: ' + summary.failed)
+}
