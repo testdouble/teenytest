@@ -42,14 +42,14 @@ We prefer including our script in the `scripts` section of our package.json:
 With that configuration above, you could run all your tests with:
 
 ```
-$ npm test
+npm test
 ```
 
 If you want to run a single test, you can just tack an additional path or glob
 at the end without looking at how teenytest is configured in the package.json:
 
 ```
-$ npm test path/to/my.test.js
+npm test path/to/my.test.js
 ```
 
 The above will ignore the glob embedded in the npm script and only run
