@@ -10,7 +10,7 @@ zero public-API and zero configuration. That's pretty teeny, by the sound of it!
 ## Usage
 
 ```
-$ npm i --save-dev teenytest
+npm i --save-dev teenytest
 ```
 
 ## Using the CLI
@@ -18,7 +18,7 @@ $ npm i --save-dev teenytest
 teenytest includes a CLI, which can be run ad hoc with:
 
 ```
-$ $(npm bin)/teenytest
+$(npm bin)/teenytest
 ```
 
 By default, the CLI will assume your tests are in `"test/lib/**/*.js"` and it
@@ -26,7 +26,7 @@ will search for a test helper in `"test/helper.js"`. You can specify either or
 both of these by providing arguments, as well:
 
 ```
-$ $(npm bin)/teenytest "test/lib/**/*.js" --helper "test/helper.js"
+$(npm bin)/teenytest "test/lib/**/*.js" --helper "test/helper.js"
 ```
 
 ### As an npm script
@@ -272,7 +272,7 @@ You can configure teenytest via CLI arguments or as properties of a `teenytest`
 object in your `package.json`. A full example follows:
 
 ```
-$ $(npm bin)/teenytest \
+$(npm bin)/teenytest \
   --helper test/support/helper.js \
   --timeout 3000 \
   --configurator config/teenytest.js \
@@ -322,7 +322,7 @@ If you have a test in `test/foo-test.js` and it exports an object with functions
 `bar` and `baz`, you could tell teenytest to just run `baz` with:
 
 ```
-$ teenytest test/foo-test.js#baz
+teenytest test/foo-test.js#baz
 ```
 
 The `#` character will split the glob on the left from the name on the right.
@@ -341,7 +341,7 @@ line 14 (whether that's the line number where the function is declared, or just
 some line inside the exported test function). You can run just that test with:
 
 ```
-$ teenytest test/bar-test.js:14
+teenytest test/bar-test.js:14
 ```
 
 ### Setting a timeout
@@ -351,7 +351,7 @@ test functions to run before failing the test with a timeout error. To change
 this setting, set the `--timeout` flag in milliseconds:
 
 ```
-$ teenytest --timeout 10000
+teenytest --timeout 10000
 ```
 
 The above will set the timeout to 10 seconds.
@@ -370,19 +370,19 @@ If you're looking for code coverage, we recommend using
 install istanbul locally:
 
 ```
-$ npm i --save-dev istanbul
+npm i --save-dev istanbul
 ```
 
 Suppose you're currently running your teeny tests with:
 
 ```
-$ $(npm bin)/teenytest "lib/**/*.test.js" --helper "test/unit-helper.js"
+$(npm bin)/teenytest "lib/**/*.test.js" --helper "test/unit-helper.js"
 ```
 
 You can now generate a coverage report for the same test run with:
 
 ```
-$ $(npm bin)/istanbul cover node_modules/teenytest/bin/teenytest -- "lib/**/*.test.js" --helper "test/unit-helper.js"
+$(npm bin)/istanbul cover node_modules/teenytest/bin/teenytest -- "lib/**/*.test.js" --helper "test/unit-helper.js"
 ```
 
 Note the use of `--` before the arguments intended for teenytest itself, which
