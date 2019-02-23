@@ -58,10 +58,7 @@ module.exports = function (finalCallbackPhew) {
       'ok 4 - "pendingExplosion" - test #4 in `safe/fixtures/plugin-test.js`',
       'not ok 5 - "pendingButDone" - test #5 in `safe/fixtures/plugin-test.js`',
       '  ---',
-      '  message: Test "pendingButDone" has "pending" in its name but it did' +
-        ' not fail! Perhaps you have yet to implement a failing test or' +
-        ' forgot to remove the pending flag?',
-      /stacktrace: Error:/,
+      / {2}Error: Test "pendingButDone" has "pending" in its name but it did not fail! Perhaps you have yet to implement a failing test or forgot to remove the pending flag\?/,
       '  ...'
     )
     finalCallbackPhew(er)

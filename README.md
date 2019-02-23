@@ -86,8 +86,7 @@ TAP version 13
 1..1
 not ok 1 - "blueIsRed" - test #1 in `test/lib/single-function.js`
   ---
-  message: 'blue' == 'red'
-  stacktrace: AssertionError: 'blue' == 'red'
+  AssertionError: 'blue' == 'red'
     at blueIsRed (teenytest/example/simple-node/test/lib/single-function.js:4:10)
     at teenytest/index.js:47:9
     ...

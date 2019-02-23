@@ -31,8 +31,7 @@ I'll run once after both tests
 I run before each test
 not ok 3 - "blueIsRed" - test #1 in `test/lib/single-function.js`
   ---
-  message: 'blue' == 'red'
-  stacktrace: AssertionError: 'blue' == 'red'
+  AssertionError: 'blue' == 'red'
     at blueIsRed (/Users/justin/code/testdouble/teenytest/example/simple-node/test/lib/single-function.js:4:10)
     at /Users/justin/code/testdouble/teenytest/index.js:47:9
     at arrayEach (/Users/justin/code/testdouble/teenytest/node_modules/lodash/lodash.js:473:11)

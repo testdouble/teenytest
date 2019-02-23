@@ -16,13 +16,11 @@ module.exports = function (cb) {
       'ok 7 - "a long passing test name" - test #1 in `example/simple-node/test/lib/multi-word-names.js`',
       'not ok 8 - "a long failing test name" - test #2 in `example/simple-node/test/lib/multi-word-names.js`',
       '  ---',
-      '  message: I fail',
-      /stacktrace: Error: I fail/,
+      /Error: I fail/,
       '  ...',
       'not ok 9 - "blueIsRed" - test #1 in `example/simple-node/test/lib/single-function.js`',
       '  ---',
-      '  message: \'blue\' == \'red\'',
-      /stacktrace: AssertionError: 'blue' == 'red'/,
+      /AssertionError: 'blue' == 'red'/,
       '  ...'
     )
     cb(er)

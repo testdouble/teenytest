@@ -17,13 +17,12 @@ Tap13.prototype.test = function (description, info) {
            (info.skipped ? ' [SKIPPED]' : ''))
 }
 
-Tap13.prototype.error = function (er, standaloneDescription) {
+Tap13.prototype.error = function (e, standaloneDescription) {
   if (!_.isNil(standaloneDescription)) {
     this.log(' An error occurred in ' + standaloneDescription)
   }
   this.log('  ---')
-  this.log('  message: ' + er.message || er.toString())
-  this.log('  stacktrace:', er.stack)
+  this.log(' ', e.stack || e.message || e)
   this.log('  ...')
 }
 

@@ -9,8 +9,7 @@ module.exports = function (cb) {
       '1..1',
       'not ok 1 - "thisIsNotOk" - test #1 in `safe/fixtures/hook-fail.js`',
       '  ---',
-      '  message: Bad hook do not run!',
-      /stacktrace: Error: Bad hook do not run/,
+      /Error: Bad hook do not run/,
       '  ...'
     )
     cb(er)

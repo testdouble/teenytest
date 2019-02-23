@@ -26,13 +26,11 @@ module.exports = function (cb) {
       'ok 2 - "baz" - test #2 in `safe/fixtures/basic-test-passing-object.js`',
       / An error occurred in suite: /,
       '  ---',
-      '  message: lol',
-      /stacktrace: Error: lol/,
+      /Error: lol/,
       '  ...',
       ' An error occurred in suite: "global" in `(top-level)`',
       '  ---',
-      '  message: lol',
-      /stacktrace: Error: lol/,
+      /Error: lol/,
       '  ...'
     )
     cb(er)
