@@ -5,7 +5,7 @@ var teenytest = require('../index')
 module.exports = function (cb) {
   var error
   try {
-    teenytest.plugins.register({name: 'lol'})
+    teenytest.plugins.register({ name: 'lol' })
   } catch (e) {
     error = e
   }

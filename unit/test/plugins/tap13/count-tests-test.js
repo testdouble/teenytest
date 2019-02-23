@@ -3,12 +3,12 @@ var subject = require('../../../../plugins/tap13/count-tests')
 module.exports = {
   "counts the number of deeply nested things with 'type' test": function () {
     var result = subject([
-      {type: 'test'},
-      {type: 'other thing'},
+      { type: 'test' },
+      { type: 'other thing' },
       {
         stuff: [
-          {type: 'nooooo'},
-          {type: 'test'}
+          { type: 'nooooo' },
+          { type: 'test' }
         ]
       }
     ])
