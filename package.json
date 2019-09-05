@@ -13,7 +13,8 @@
     "test": "npm run test:unit && npm run test:safe && npm run test:example && npm run style",
     "test:unit": "cd unit && npm install && npm test",
     "test:safe": "./safe/support/runner.js",
-    "test:example": "bats --tap safe"
+    "test:example": "bats --tap safe",
+    "test:bats": "bats --tap --recursive bats"
   },
   "keywords": [
     "teeny",
