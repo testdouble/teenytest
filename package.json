@@ -10,7 +10,7 @@
   },
   "scripts": {
     "style": "standard --fix",
-    "test": "npm run test:unit && npm run test:safe && npm run test:example && npm run style",
+    "test": "npm run test:unit && npm run test:safe && npm run test:bats && npm run test:example && npm run style",
     "test:unit": "cd unit && npm install && npm test",
     "test:safe": "./safe/support/runner.js",
     "test:example": "bats --tap safe",
