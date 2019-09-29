@@ -119,19 +119,17 @@ ok 4 - "group_a group_b named_test_aaa" - test #2 in `./bats/fixtures/filterable
   expected='TAP version 13
 1..8
 ok 1 - "named_test_aaa" - test #1 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
-ok 2 - "group_a group_b named_test_aaa" - test #2 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
-ok 3 - "named_test_bbb" - test #1 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
-ok 4 - "group_a group_b named_test_bbb" - test #2 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+ok 2 - "named_test_bbb" - test #2 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+ok 3 - "group_a group_b named_test_aaa" - test #3 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+ok 4 - "group_a group_b named_test_bbb" - test #4 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
 ok 5 - "named_test_aaa" - test #1 in `./bats/fixtures/filterable-examples.js`
-ok 6 - "group_a group_b named_test_aaa" - test #2 in `./bats/fixtures/filterable-examples.js`
-ok 7 - "named_test_bbb" - test #1 in `./bats/fixtures/filterable-examples.js`
-ok 8 - "group_a group_b named_test_bbb" - test #2 in `./bats/fixtures/filterable-examples.js`
+ok 6 - "named_test_bbb" - test #2 in `./bats/fixtures/filterable-examples.js`
+ok 7 - "group_a group_b named_test_aaa" - test #3 in `./bats/fixtures/filterable-examples.js`
+ok 8 - "group_a group_b named_test_bbb" - test #4 in `./bats/fixtures/filterable-examples.js`
 # Test run passed!
 #   Passed: 8
 #   Failed: 0
 #   Total:  8'
-
-  skip "Work in progress"
 
   run ./bin/teenytest --example='named_test_aaa' --example='named_test_bbb' './bats/fixtures/filterable-examples*.js'
 
@@ -178,15 +176,13 @@ ok 4 - "group_a group_b named_test_bbb" - test #2 in `./bats/fixtures/filterable
   expected='TAP version 13
 1..4
 ok 1 - "named_test_aaa" - test #1 in `./bats/fixtures/filterable-examples.js`
-ok 2 - "group_a group_b named_test_aaa" - test #2 in `./bats/fixtures/filterable-examples.js`
-ok 1 - "named_test_bbb" - test #3 in `./bats/fixtures/filterable-examples.js`
-ok 2 - "group_a group_b named_test_bbb" - test #4 in `./bats/fixtures/filterable-examples.js`
+ok 2 - "named_test_bbb" - test #2 in `./bats/fixtures/filterable-examples.js`
+ok 3 - "group_a group_b named_test_aaa" - test #3 in `./bats/fixtures/filterable-examples.js`
+ok 4 - "group_a group_b named_test_bbb" - test #4 in `./bats/fixtures/filterable-examples.js`
 # Test run passed!
 #   Passed: 4
 #   Failed: 0
 #   Total:  4'
-
-  skip "Work in progress"
 
   run ./bin/teenytest \
       './bats/fixtures/filterable-examples.js#named_test_aaa' \
@@ -197,17 +193,17 @@ ok 2 - "group_a group_b named_test_bbb" - test #4 in `./bats/fixtures/filterable
 
 @test "with per-argument '#' filters resulting in duplicate matches ${DESCRIBE} runs all matching tests only once removing duplicates" {
   expected='TAP version 13
-1..4
-ok 1 - "named_test_aaa" - test #1 in `./bats/fixtures/filterable-examples.js`
-ok 2 - "group_a group_b named_test_aaa" - test #2 in `./bats/fixtures/filterable-examples.js`
-ok 3 - "named_test_bbb" - test #1 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
-ok 4 - "group_a group_b named_test_bbb" - test #2 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+1..6
+ok 1 - "named_test_aaa" - test #1 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+ok 2 - "named_test_bbb" - test #2 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+ok 3 - "group_a group_b named_test_aaa" - test #3 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+ok 4 - "group_a group_b named_test_bbb" - test #4 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+ok 5 - "named_test_aaa" - test #1 in `./bats/fixtures/filterable-examples.js`
+ok 6 - "group_a group_b named_test_aaa" - test #2 in `./bats/fixtures/filterable-examples.js`
 # Test run passed!
-#   Passed: 4
+#   Passed: 6
 #   Failed: 0
-#   Total:  4'
-
-  skip "Work in progress"
+#   Total:  6'
 
   run ./bin/teenytest \
       './bats/fixtures/filterable-*.js#named_test_aaa' \
@@ -259,8 +255,6 @@ ok 2 - "example_on_line_3" - test #2 in `./bats/fixtures/filterable-examples.js`
 #   Failed: 0
 #   Total:  2'
 
-  skip "Work in progress"
-
   run ./bin/teenytest \
       './bats/fixtures/filterable-examples.js:2' \
       './bats/fixtures/filterable-examples.js:3'
@@ -270,16 +264,14 @@ ok 2 - "example_on_line_3" - test #2 in `./bats/fixtures/filterable-examples.js`
 
 @test "with per-argument ':' filters resulting in duplicate matches ${DESCRIBE} runs all matching tests only once removing duplicates" {
   expected='TAP version 13
-1..2
-ok 1 - "example_on_line_2" - test #1 in `./bats/fixtures/filterable-examples.js`
-ok 2 - "example_on_line_2" - test #2 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+1..3
+ok 1 - "example_on_line_2" - test #1 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
 ok 2 - "example_on_line_3" - test #2 in `./bats/fixtures/filterable-examples-same-as-other-file.js`
+ok 3 - "example_on_line_2" - test #1 in `./bats/fixtures/filterable-examples.js`
 # Test run passed!
 #   Passed: 3
 #   Failed: 0
 #   Total:  3'
-
-  skip "Work in progress"
 
   run ./bin/teenytest \
       './bats/fixtures/filterable-*.js:2' \
@@ -290,7 +282,7 @@ ok 2 - "example_on_line_3" - test #2 in `./bats/fixtures/filterable-examples-sam
   [ "$output" = "$expected" ]
 }
 
-@test "with '#' and :' filters both matching the same test within a file ${DESCRIBE} runs the test once per filter type without resolving duplicates" {
+@test "with '#' and :' filters both matching the same test within a file ${DESCRIBE} runs the test once per file without duplicates" {
   expected='TAP version 13
 1..2
 ok 1 - "example_on_line_2" - test #1 in `./bats/fixtures/filterable-examples.js`
@@ -299,8 +291,6 @@ ok 2 - "example_on_line_3" - test #2 in `./bats/fixtures/filterable-examples.js`
 #   Passed: 2
 #   Failed: 0
 #   Total:  2'
-
-  skip "Work in progress"
 
   run ./bin/teenytest \
       './bats/fixtures/filterable-examples.js:2' \
