@@ -1,0 +1,3 @@
+# bats uses the Mac OS temp directory, which is obfuscated
+# for debugging nice to see WTF...
+# echo "${BATS_MOCK_TMPDIR}" >&3
