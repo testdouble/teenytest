@@ -286,7 +286,7 @@ The above is equivalent to the following `package.json` entry:
 "teenytest": {
   "testLocator": "lib/**/*.test.js",
   "helper": "test/support/helper.js",
-  "timeout": 3000,
+  "asyncTimeout": 3000,
   "configurator": "config/teenytest.js",
   "plugins": [
     "test/support/benchmark-plugin.js",
@@ -297,11 +297,13 @@ The above is equivalent to the following `package.json` entry:
 
 These options are available:
 
-* **testLocator** - [Default: `"test/lib/**/*.js"`] - the file glob teenytest
-should use to search for tests
+* **testLocator** - [Default: `"test/lib/**/*.js"`] - one or more globs which
+teenytest should use to search for tests. May be a string or an array of strings
+* **example** - [Default: `[]`] - one or more global name filters to be applied
+to all files matched by `testLocator`
 * **helper** - [Default: `"test/helper.js"`] - the location of your global test
 helper file
-* **timeout** - [Default: `5000`] - the maximum timeout (in milliseconds) for any
+* **asyncTimeout** - [Default: `5000`] - the maximum timeout (in milliseconds) for any
 given test in your suite
 * **configurator** - [Default: `undefined`] - a `require`-able path which exports
 a function that with parameters `(teenytest, cb)`. Configurator files may be used
@@ -310,6 +312,23 @@ or unregister plugins with functions provided by `teenytest.plugins`, and must
 invoke the provided callback
 * **plugins** - [Default: `[]`] - an array of `require`-able paths which export
 either teenytest plugin objects or no-arg functions that return plugin objects
+
+### Specifying which test files to run
+
+If you'd like to run tests from specific files, you can do that by passing
+`testLocator` as an unnamed option on the command line.
+
+```
+teenytest test/foo-test.js
+```
+
+Multiple path/glob options can be passed for `testLocator`. The following will
+run all tests in `test/specific-foo-test.js` as well as any test file matching
+the glob pattern `test/*-bar-test.js`.
+
+```
+teenytest test/single-foo-test.js test/*-bar-test.js
+```
 
 ### Filtering which tests are run
 
@@ -341,6 +360,54 @@ some line inside the exported test function). You can run just that test with:
 
 ```
 teenytest test/bar-test.js:14
+```
+
+#### Locating with multiple names or line numbers
+
+Each `testLocator` option can include one name or line number filter suffix.
+The same glob may be passed multiple times with different suffixes to locate
+tests matching more than one filter:
+
+```
+teenytest \
+  test/foo-test.js#red \
+  test/foo-test.js#blue \
+  test/bar-test.js:14 \
+  test/bar-test.js:28
+```
+
+The above will run tests named `red` and `blue` in the file `test/foo-test.js`
+and tests on lines 14 and 28 in the file `test/bar-test.js`.
+
+#### Locating with the `--example` option
+
+The `--example` option may be used to specify a global name filter that will be
+applied to every `testLocator` in addition to any filter suffixes provided. The
+following two commands would result in identical test runs:
+
+```
+teenytest \
+  --example=red
+  test/foo.test.js
+  test/bar.test.js#blue
+  test/baz.test.js:14
+```
+
+```
+teenytest \
+  test/foo.test.js
+  test/foo.test.js#red
+  test/bar.test.js#blue
+  test/bar.test.js#red
+  test/baz.test.js:14
+  test/baz.test.js#red
+```
+
+`--example` may be used miltiple times to specify more than one global name
+filter:
+
+```
+teenytest --example=red --example=blue test/foo.test.js
 ```
 
 ### Setting a timeout
