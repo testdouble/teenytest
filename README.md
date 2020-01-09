@@ -299,7 +299,7 @@ These options are available:
 
 * **testLocator** - [Default: `"test/lib/**/*.js"`] - one or more globs which
 teenytest should use to search for tests. May be a string or an array of strings
-* **example** - [Default: `[]`] - one or more global name filters to be applied
+* **name** - [Default: `[]`] - one or more global name filters to be applied
 to all files matched by `testLocator`
 * **helper** - [Default: `"test/helper.js"`] - the location of your global test
 helper file
@@ -379,15 +379,15 @@ teenytest \
 The above will run tests named `red` and `blue` in the file `test/foo-test.js`
 and tests on lines 14 and 28 in the file `test/bar-test.js`.
 
-#### Locating with the `--example` option
+#### Locating with the `--name` option
 
-The `--example` option may be used to specify a global name filter that will be
+The `--name` option may be used to specify a global name filter that will be
 applied to every `testLocator` in addition to any filter suffixes provided. The
 following two commands would result in identical test runs:
 
 ```
 teenytest \
-  --example=red
+  --name=red
   test/foo.test.js
   test/bar.test.js#blue
   test/baz.test.js:14
@@ -403,11 +403,11 @@ teenytest \
   test/baz.test.js#red
 ```
 
-`--example` may be used miltiple times to specify more than one global name
+`--name` may be used miltiple times to specify more than one global name
 filter:
 
 ```
-teenytest --example=red --example=blue test/foo.test.js
+teenytest --name=red --name=blue test/foo.test.js
 ```
 
 ### Setting a timeout

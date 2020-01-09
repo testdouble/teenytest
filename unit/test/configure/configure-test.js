@@ -97,8 +97,8 @@ module.exports = {
     assert.deepEqual(config.criteria.testFiles, expected)
   },
 
-  'builds test name filter criteria from a file and example option': function () {
-    const config = subject('../safe/fixtures/basic-test-passing-object.js', { example: 'exampleName' })
+  'builds test name filter criteria from a file and name option': function () {
+    const config = subject('../safe/fixtures/basic-test-passing-object.js', { name: 'exampleName' })
     var expected = [{
       file: '../safe/fixtures/basic-test-passing-object.js',
       name: ['exampleName']
@@ -106,8 +106,8 @@ module.exports = {
     assert.deepEqual(config.criteria.testFiles, expected)
   },
 
-  'builds test name filter criteria from a file and multiple example options': function () {
-    const config = subject('../safe/fixtures/basic-test-passing-object.js', { example: ['exampleName', 'otherExample'] })
+  'builds test name filter criteria from a file and multiple name options': function () {
+    const config = subject('../safe/fixtures/basic-test-passing-object.js', { name: ['exampleName', 'otherExample'] })
     var expected = [{
       file: '../safe/fixtures/basic-test-passing-object.js',
       name: ['exampleName', 'otherExample']

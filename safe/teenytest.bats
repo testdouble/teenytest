@@ -88,7 +88,7 @@ ok 3 - "baz" - test #2 in `./safe/fixtures/test_objects/basic-test-passing-objec
   [ "$output" = "$expected" ]
 }
 
-@test "with single '--example' named argument teenytest runs all tests in all files with matching name filters" {
+@test "with single '--name' named argument teenytest runs all tests in all files with matching name filters" {
   expected='TAP version 13
 1..4
 ok 1 - "named_test_aaa" - test #1 in `./safe/fixtures/filterable-examples-same-as-other-file.js`
@@ -100,12 +100,12 @@ ok 4 - "group_a group_b named_test_aaa" - test #2 in `./safe/fixtures/filterable
 #   Failed: 0
 #   Total:  4'
 
-  run ./bin/teenytest --example='named_test_aaa' './safe/fixtures/filterable-examples*.js'
+  run ./bin/teenytest --name='named_test_aaa' './safe/fixtures/filterable-examples*.js'
 
   [ "$output" = "$expected" ]
 }
 
-@test "with multiple '--example' named arguments teenytest runs all tests in all files with matching name filters" {
+@test "with multiple '--name' named arguments teenytest runs all tests in all files with matching name filters" {
   expected='TAP version 13
 1..8
 ok 1 - "named_test_aaa" - test #1 in `./safe/fixtures/filterable-examples-same-as-other-file.js`
@@ -121,7 +121,7 @@ ok 8 - "group_a group_b named_test_bbb" - test #4 in `./safe/fixtures/filterable
 #   Failed: 0
 #   Total:  8'
 
-  run ./bin/teenytest --example='named_test_aaa' --example='named_test_bbb' './safe/fixtures/filterable-examples*.js'
+  run ./bin/teenytest --name='named_test_aaa' --name='named_test_bbb' './safe/fixtures/filterable-examples*.js'
 
   [ "$output" = "$expected" ]
 }
