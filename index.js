@@ -6,7 +6,16 @@ var run = require('./lib/run')
 module.exports = function (testLocator, userOptions, cb) {
   if (arguments.length < 3) { cb = userOptions; userOptions = {} }
   var config = configure(testLocator, userOptions)
-  run(plan(prepare(config)), config, cb)
+  prepare(config)
+    .then(function (prepared) {
+      setImmediate(function () {
+        run(plan(prepared), config, cb)
+      })
+    }, function (er) {
+      setImmediate(function () {
+        cb(er)
+      })
+    })
 }
 
 module.exports.plugins = require('./lib/plugins/store')
