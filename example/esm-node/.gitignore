@@ -1,0 +1,7 @@
+/node_modules/*
+!/node_modules/.bin
+!/node_modules/teenytest
+/node_modules/.bin/*
+!/node_modules/.bin/teenytest
+
+
