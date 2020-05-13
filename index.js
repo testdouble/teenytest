@@ -12,6 +12,8 @@ module.exports = function (testLocator, userOptions, cb) {
         run(plan(prepared), config, cb)
       })
     }, function (er) {
+      var log = userOptions.output || console.log
+      log(er.stack || String(er))
       setImmediate(function () {
         cb(er)
       })
