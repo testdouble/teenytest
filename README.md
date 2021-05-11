@@ -1,6 +1,6 @@
 # teenytest
 
-[![Build Status](https://travis-ci.org/testdouble/teenytest.svg?branch=master)](https://travis-ci.org/testdouble/teenytest)
+[![Build Status](https://travis-ci.org/testdouble/teenytest.svg?branch=main)](https://travis-ci.org/testdouble/teenytest)
 
 A test runner so tiny, you have to squint to see it!
 
