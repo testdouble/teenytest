@@ -307,7 +307,7 @@ helper file
 given test in your suite
 * **configurator** - [Default: `undefined`] - a `require`-able path which exports
 a function that with parameters `(teenytest, cb)`. Configurator files may be used
-to run custom code just before the test runner executes the thest suite, register
+to run custom code just before the test runner executes the test suite, register
 or unregister plugins with functions provided by `teenytest.plugins`, and must
 invoke the provided callback
 * **plugins** - [Default: `[]`] - an array of `require`-able paths which export
@@ -403,7 +403,7 @@ teenytest \
   test/baz.test.js#red
 ```
 
-`--name` may be used miltiple times to specify more than one global name
+`--name` may be used multiple times to specify more than one global name
 filter:
 
 ```
@@ -668,6 +668,6 @@ teenytest('test/lib/**/*.js', {
 As you can see, the above script will bail with a non-zero exit code if the tests
 don't pass or if a fatal error occurs.
 
-While the API is asynchronous, but both sycnhronous and asynchronous tests are
+While the API is asynchronous, but both synchronous and asynchronous tests are
 supported.
 
