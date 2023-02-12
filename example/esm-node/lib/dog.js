@@ -1,4 +1,4 @@
-var _ = require('lodash')
+const _ = require('lodash')
 
 function Dog (name) {
   this.name = name

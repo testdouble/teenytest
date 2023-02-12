@@ -1,4 +1,4 @@
-var i = 0
+let i = 0
 module.exports = {
   name: 'counter',
   analyzers: {

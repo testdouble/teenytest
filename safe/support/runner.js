@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
-var glob = require('glob')
-var path = require('path')
-var _ = require('lodash')
-var async = require('async')
+const glob = require('glob')
+const path = require('path')
+const _ = require('lodash')
+const async = require('async')
 
-var store = require('../../lib/store')
+const store = require('../../lib/store')
 
-var globLocator = process.argv[2] || 'safe/*.js'
-var passing = false
-var uncaughtErrors = []
+const globLocator = process.argv[2] || 'safe/*.js'
+let passing = false
+const uncaughtErrors = []
 
 async.series(_.map(glob.sync(globLocator), function (file) {
-  var metaTest = require(path.resolve(process.cwd(), file))
+  const metaTest = require(path.resolve(process.cwd(), file))
   if (_.isFunction(metaTest)) {
     return function (cb) {
       store.reset()

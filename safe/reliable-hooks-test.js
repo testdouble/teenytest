@@ -1,4 +1,4 @@
-var helper = require('./support/helper')
+const helper = require('./support/helper')
 
 module.exports = function (cb) {
   helper.run('safe/fixtures/reliable-hooks.js', function (er, result, log) {

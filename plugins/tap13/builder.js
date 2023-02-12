@@ -1,4 +1,4 @@
-var _ = require('lodash')
+const _ = require('lodash')
 
 function Tap13 (log) {
   this.log = log
@@ -27,7 +27,7 @@ Tap13.prototype.error = function (e, standaloneDescription) {
 }
 
 Tap13.prototype.summarize = function (summary) {
-  var p = this.log
+  const p = this.log
   p('# Test run ' + (summary.failed === 0 ? 'passed!' : 'failed!'))
   p('#   Passed: ' + summary.passed)
   p('#   Failed: ' + summary.failed)

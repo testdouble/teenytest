@@ -1,4 +1,4 @@
-var _ = require('lodash')
+const _ = require('lodash')
 global.__results = {}
 
 // This is a dye test to verify that all the expected hooks ran (or didn't)

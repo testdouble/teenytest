@@ -1,8 +1,8 @@
-var helper = require('./support/helper')
-var assert = require('core-assert')
+const helper = require('./support/helper')
+const assert = require('core-assert')
 
 module.exports = function (cb) {
-  var configurator = function (teenytest, cb) {
+  const configurator = function (teenytest, cb) {
     teenytest.plugins.register({
       name: 'woah the suite will fail',
       supervisors: {
@@ -16,7 +16,7 @@ module.exports = function (cb) {
     cb(null)
   }
   helper.run('safe/fixtures/basic-test-passing-obj*.js', {
-    configurator: configurator
+    configurator
   }, function (er, result, log) {
     assert.equal(result, false)
     log.assert(

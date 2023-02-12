@@ -1,9 +1,9 @@
-var assert = require('core-assert')
+const assert = require('core-assert')
 
-var teenytest = require('../index')
+const teenytest = require('../index')
 
 module.exports = function (cb) {
-  var error
+  let error
   try {
     teenytest.plugins.register({ name: 'lol' })
   } catch (e) {

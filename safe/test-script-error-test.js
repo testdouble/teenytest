@@ -1,5 +1,5 @@
-var helper = require('./support/helper')
-var assert = require('assert')
+const helper = require('./support/helper')
+const assert = require('assert')
 
 module.exports = function (cb) {
   helper.run('safe/fixtures/syntax-error-test.js', function (er, result, log) {

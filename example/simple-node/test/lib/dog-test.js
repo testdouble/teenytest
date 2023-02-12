@@ -1,5 +1,5 @@
-var assert = require('core-assert')
-var Dog = require('../../lib/dog')
+const assert = require('core-assert')
+const Dog = require('../../lib/dog')
 
 module.exports = {
   beforeEach: function () {

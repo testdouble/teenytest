@@ -1,5 +1,5 @@
-var helper = require('./support/helper')
-var assert = require('core-assert')
+const helper = require('./support/helper')
+const assert = require('core-assert')
 
 module.exports = function (cb) {
   global.__results = []
@@ -16,7 +16,7 @@ module.exports = function (cb) {
       'ok 2 - "async" - test #2 in `safe/fixtures/returns-stuff.js`'
     )
 
-    var stuff = global.__results[0]
+    const stuff = global.__results[0]
     assert.equal(stuff.value, 'stuff')
     assert.deepEqual(stuff.plugins.result, {
       value: 'Result: stuff',
@@ -31,7 +31,7 @@ module.exports = function (cb) {
       error: undefined
     })
 
-    var otherStuff = global.__results[1]
+    const otherStuff = global.__results[1]
     assert.equal(otherStuff.value, 'other stuff')
     assert.deepEqual(otherStuff.plugins.result, {
       value: 'Result: other stuff',

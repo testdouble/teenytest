@@ -1,10 +1,10 @@
-var helper = require('./support/helper')
-var assert = require('core-assert')
+const helper = require('./support/helper')
+const assert = require('core-assert')
 
-var _ = require('lodash')
+const _ = require('lodash')
 
 module.exports = function (finalCallbackPhew) {
-  var configurator = function (teenytest, cb) {
+  const configurator = function (teenytest, cb) {
     teenytest.plugins.register({
       name: 'pending',
       interceptors: {
@@ -46,7 +46,7 @@ module.exports = function (finalCallbackPhew) {
   }
 
   helper.run('safe/fixtures/plugin-test.js', {
-    configurator: configurator
+    configurator
   }, function (er, result, log) {
     assert.equal(result, false)
     log.assert(

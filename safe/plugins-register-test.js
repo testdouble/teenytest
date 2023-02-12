@@ -1,6 +1,6 @@
-var assert = require('core-assert')
-var teenytest = require('../index')
-var store = require('../lib/store')
+const assert = require('core-assert')
+const teenytest = require('../index')
+const store = require('../lib/store')
 
 module.exports = {
   registeringIdenticalPluginMovesItToTheBack: function (cb) {
@@ -40,7 +40,7 @@ module.exports = {
   }
 }
 
-var somePlugin = {
+const somePlugin = {
   name: 'some-plugin',
   translators: {
     userFunction: function (runUserFunction, metadata, cb) {
@@ -49,10 +49,10 @@ var somePlugin = {
   }
 }
 
-var otherPlugin = {
+const otherPlugin = {
   name: 'other-plugin'
 }
 
-var someOtherPlugin = {
+const someOtherPlugin = {
   name: 'some-plugin'
 }

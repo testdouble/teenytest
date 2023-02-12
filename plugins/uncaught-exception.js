@@ -1,12 +1,12 @@
-var _ = require('lodash')
+const _ = require('lodash')
 
 module.exports = function () {
   return {
     name: 'teenytest-uncaught-exception',
     supervisors: {
       userFunction: function (runUserFunction, metadata, cb) {
-        var onceCb = _.once(cb)
-        var uncaughtErrorHandler = function uncaughtErrorHandler (er) {
+        const onceCb = _.once(cb)
+        const uncaughtErrorHandler = function uncaughtErrorHandler (er) {
           process.removeListener('uncaughtException', uncaughtErrorHandler)
           onceCb(er)
         }

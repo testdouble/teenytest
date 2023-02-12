@@ -1,9 +1,9 @@
-var subject = require('../../../lib/configure')
+const subject = require('../../../lib/configure')
 
 module.exports = {
   'builds test file criteria with no filters from a single path': function () {
     const config = subject(['../safe/fixtures/single-func.js'], {})
-    var expected = [{
+    const expected = [{
       file: '../safe/fixtures/single-func.js'
     }]
     assert.deepEqual(config.criteria.testFiles, expected)
@@ -14,7 +14,7 @@ module.exports = {
       '../safe/fixtures/single-func.js',
       '../safe/fixtures/single-named-func.js'
     ], {})
-    var expected = [
+    const expected = [
       { file: '../safe/fixtures/single-func.js' },
       { file: '../safe/fixtures/single-named-func.js' }
     ]
@@ -23,7 +23,7 @@ module.exports = {
 
   'builds test file criteria with no filters from a single glob pattern': function () {
     const config = subject('../safe/fixtures/single-func.js', {})
-    var expected = [{
+    const expected = [{
       file: '../safe/fixtures/single-func.js'
     }]
     assert.deepEqual(config.criteria.testFiles, expected)
@@ -34,7 +34,7 @@ module.exports = {
       '../safe/fixtures/nested-*.js',
       '../safe/fixtures/single-*.js'
     ], {})
-    var expected = [
+    const expected = [
       { file: '../safe/fixtures/nested-sparse-test.js' },
       { file: '../safe/fixtures/nested-test.js' },
       { file: '../safe/fixtures/single-func.js' },
@@ -50,7 +50,7 @@ module.exports = {
       '../safe/fixtures/nested-test.js',
       '../safe/fixtures/single-func.js'
     ], {})
-    var expected = [
+    const expected = [
       { file: '../safe/fixtures/nested-sparse-test.js' },
       { file: '../safe/fixtures/nested-test.js' },
       { file: '../safe/fixtures/single-func.js' },
@@ -65,7 +65,7 @@ module.exports = {
       '../safe/fixtures/basic-test-passing-object.js:3',
       '../safe/fixtures/fail-function.js:5'
     ], {})
-    var expected = [
+    const expected = [
       {
         file: '../safe/fixtures/basic-test-passing-object.js',
         lineNumber: ['2', '3']
@@ -84,7 +84,7 @@ module.exports = {
       '../safe/fixtures/basic-test-passing-object.js#baz',
       '../safe/fixtures/context-test.js#test1'
     ], {})
-    var expected = [
+    const expected = [
       {
         file: '../safe/fixtures/basic-test-passing-object.js',
         name: ['bar', 'baz']
@@ -99,7 +99,7 @@ module.exports = {
 
   'builds test name filter criteria from a file and name option': function () {
     const config = subject('../safe/fixtures/basic-test-passing-object.js', { name: 'exampleName' })
-    var expected = [{
+    const expected = [{
       file: '../safe/fixtures/basic-test-passing-object.js',
       name: ['exampleName']
     }]
@@ -108,7 +108,7 @@ module.exports = {
 
   'builds test name filter criteria from a file and multiple name options': function () {
     const config = subject('../safe/fixtures/basic-test-passing-object.js', { name: ['exampleName', 'otherExample'] })
-    var expected = [{
+    const expected = [{
       file: '../safe/fixtures/basic-test-passing-object.js',
       name: ['exampleName', 'otherExample']
     }]

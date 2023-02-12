@@ -1,4 +1,4 @@
-var waiter = function (ms) {
+const waiter = function (ms) {
   return function (cb) {
     setTimeout(function () { cb(null) }, ms)
   }

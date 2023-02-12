@@ -1,6 +1,6 @@
-var assert = require('core-assert')
+const assert = require('core-assert')
 
-var contextyThings = []
+const contextyThings = []
 module.exports = {
   beforeEach: function () {
     this.thing = {}

@@ -1,13 +1,13 @@
-var _ = require('lodash')
+const _ = require('lodash')
 
-var Tap13 = require('./builder')
-var countTests = require('./count-tests')
-var Summary = require('./summary')
+const Tap13 = require('./builder')
+const countTests = require('./count-tests')
+const Summary = require('./summary')
 
 module.exports = function (log) {
-  var tap13 = new Tap13(log)
-  var preludePrinted = false
-  var summary = new Summary()
+  const tap13 = new Tap13(log)
+  let preludePrinted = false
+  const summary = new Summary()
 
   return {
     name: 'teenytest-tap13',
@@ -36,7 +36,7 @@ module.exports = function (log) {
         })
       },
       suite: function (runSuite, metadata, cb) {
-        var topLevelSuite = false
+        let topLevelSuite = false
         if (!preludePrinted) {
           topLevelSuite = true
           tap13.prelude(countTests(metadata))

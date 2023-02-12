@@ -1,8 +1,8 @@
-var _ = require('lodash')
-var assert = require('core-assert')
+const _ = require('lodash')
+const assert = require('core-assert')
 
 module.exports = function () {
-  var log = []
+  const log = []
 
   return {
     write: function () {
@@ -11,7 +11,7 @@ module.exports = function () {
     read: function () { return log },
     toString: function () { return log.join('\n') },
     assert: function () {
-      var lines = _.toArray(arguments)
+      const lines = _.toArray(arguments)
 
       try {
         _.each(lines, function (line, i) {
