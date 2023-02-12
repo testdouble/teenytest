@@ -8,6 +8,6 @@
   },
   "devDependencies": {
     "core-assert": "^0.2.1",
-    "teenytest": "^5.0.2"
+    "teenytest": "^6.0.4"
   }
 }
