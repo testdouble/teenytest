@@ -2,7 +2,7 @@ var async = require('async')
 var spawn = require('child_process').spawn
 var path = require('path')
 var assert = require('core-assert')
-
+var which = require('which')
 var helper = require('./support/helper')
 
 module.exports = function (cb) {
@@ -47,9 +47,16 @@ function runWithPlugins (name) {
 }
 
 function run (projectDir, cb) {
-  var test = spawn('npm', ['test'], {
+  var options = {
     cwd: path.resolve(process.cwd(), 'safe/fixtures/projects/' + projectDir)
-  })
+  }
+  if (process.platform === 'win32') {
+    const bashPath = which.sync('bash', { nothrow: true })
+    if (bashPath) {
+      options.shell = bashPath
+    }
+  }
+  var test = spawn('npm', ['test'], options)
 
   var log = ''
   test.stdout.on('data', function (text) {
