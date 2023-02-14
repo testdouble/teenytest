@@ -1,5 +1,5 @@
-const printerPlugin = require('../plugins/printer')
-const otherPrinterPlugin = require('../plugins/other-printer')
+const printerPlugin = require('../../vanilla/plugins/printer')
+const otherPrinterPlugin = require('../../vanilla/plugins/other-printer')
 
 const assert = require('core-assert')
 

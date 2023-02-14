@@ -1,4 +1,4 @@
-const otherPrinterPlugin = require('../plugins/other-printer')
+const otherPrinterPlugin = require('../../vanilla/plugins/other-printer')
 
 module.exports = function (teenytest, cb) {
   teenytest.plugins.register(otherPrinterPlugin)
