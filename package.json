@@ -10,10 +10,11 @@
   },
   "scripts": {
     "style": "standard --fix",
-    "test": "npm run test:unit && npm run test:safe && npm run test:safe:bats && npm run style",
+    "test": "npm run test:unit && npm run test:safe && npm run test:safe:bats && npm run test:safe:esm && npm run style",
     "test:unit": "cd unit && npm install && npm test",
-    "test:safe": "./safe/support/runner.js",
-    "test:safe:bats": "bats --tap --recursive safe"
+    "test:safe": "node ./safe/support/runner.js",
+    "test:safe:esm": "cd example/esm-node && npm test -- test/lib/dog-test.mjs:10",
+    "test:safe:bats": "bash -c 'bats --tap --recursive safe'"
   },
   "keywords": [
     "teeny",

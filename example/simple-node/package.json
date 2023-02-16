@@ -7,6 +7,6 @@
     "test": "test"
   },
   "scripts": {
-    "test": "teenytest"
+    "test": "node ../../bin/teenytest"
   }
 }

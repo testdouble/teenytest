@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "../../../../bin/teenytest \"test/**/*.js\""
+    "test": "node ../../../../bin/teenytest test/**/*.js"
   },
   "author": "",
   "teenytest": {
     "plugins": [
-      "plugins/printer",
-      "./plugins/other-printer"
+      "../vanilla/plugins/printer",
+      "../vanilla/plugins/other-printer"
     ]
   }
 }
