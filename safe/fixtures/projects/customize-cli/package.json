@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "../../../../bin/teenytest --plugin ../vanilla/plugins/printer --configurator \"config/teenyfile\" \"test/**/*.js\""
+    "test": "node ../../../../bin/teenytest --plugin ../vanilla/plugins/printer --configurator \"config/teenyfile\" \"test/**/*.js\""
   },
   "author": ""
 }

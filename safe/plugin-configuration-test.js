@@ -2,7 +2,6 @@ const async = require('async')
 const spawn = require('child_process').spawn
 const path = require('path')
 const assert = require('core-assert')
-const which = require('which')
 const helper = require('./support/helper')
 
 module.exports = function (cb) {
@@ -51,10 +50,7 @@ function run (projectDir, cb) {
     cwd: path.resolve(process.cwd(), 'safe/fixtures/projects/' + projectDir)
   }
   if (process.platform === 'win32') {
-    const bashPath = which.sync('bash', { nothrow: true })
-    if (bashPath) {
-      options.shell = bashPath
-    }
+    options.shell = true
   }
   const test = spawn('npm', ['test'], options)
 
