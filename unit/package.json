@@ -4,7 +4,7 @@
   "description": "This is the unit test suite for teenytest",
   "main": "index.js",
   "scripts": {
-    "test": "teenytest test/**/*.js --helper unit-helper.js"
+    "test": "teenytest \"test/**/*.js\" --helper unit-helper.js"
   },
   "devDependencies": {
     "core-assert": "^0.2.1",
