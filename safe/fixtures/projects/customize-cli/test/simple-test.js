@@ -1,4 +1,4 @@
-const assert = require('core-assert')
+const assert = require('assert')
 
 module.exports = {
   add: function () {

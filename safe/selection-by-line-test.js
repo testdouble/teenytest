@@ -1,5 +1,5 @@
 const helper = require('./support/helper')
-const assert = require('core-assert')
+const assert = require('assert')
 
 module.exports = function canSelectTestByName (cb) {
   helper.run('example/simple-node/test/lib/multi-word-names.js:8', function (er, result, log) {

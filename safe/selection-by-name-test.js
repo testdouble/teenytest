@@ -1,5 +1,5 @@
 const helper = require('./support/helper')
-const assert = require('core-assert')
+const assert = require('assert')
 
 module.exports = function canSelectTestByName (cb) {
   helper.run('example/simple-node/test/lib/exporting-an-object.js#adds', function (er, result, log) {

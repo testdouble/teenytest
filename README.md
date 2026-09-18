@@ -191,11 +191,7 @@ ok 4 - "tag backSaysAddress" - test #4 in `example/simple-node/test/lib/dog-test
 One thing you'll notice right away is that teenytest does not ship with its own
 assertion library. In teenytest, any test that throws an error will trigger a
 test failure. To keep things simple, the examples in teenytest use Node's
-built-in [assert module](https://nodejs.org/api/assert.html), but keep in mind
-that it isn't intended for public consumption.
-
-If you like the simplicity of the built-in assert, you might want to use its port
-[core-assert](https://github.com/sindresorhus/core-assert).
+built-in [assert module](https://nodejs.org/api/assert.html).
 [chai](https://github.com/chaijs/chai) is also a very popular choice.
 
 ### Writing asynchronous tests

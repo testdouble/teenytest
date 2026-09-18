@@ -1,5 +1,5 @@
 const helper = require('./support/helper')
-const assert = require('core-assert')
+const assert = require('assert')
 
 module.exports = function (cb) {
   global.__results = []

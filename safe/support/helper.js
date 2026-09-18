@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const assert = require('core-assert')
+const assert = require('assert')
 
 const loggerFactory = require('./logger-factory')
 const teenytest = require('../../index')

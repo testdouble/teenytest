@@ -1,5 +1,5 @@
 const helper = require('./support/helper')
-const assert = require('core-assert')
+const assert = require('assert')
 
 module.exports = function (cb) {
   helper.run('example/simple-node/test/lib/**/*.js', function (er, result, log) {
@@ -20,7 +20,7 @@ module.exports = function (cb) {
       '  ...',
       'not ok 9 - "blueIsRed" - test #1 in `example/simple-node/test/lib/single-function.js`',
       '  ---',
-      /AssertionError: 'blue' == 'red'/,
+      /AssertionError \[ERR_ASSERTION\]: 'blue' == 'red'/,
       '  ...'
     )
     cb(er)

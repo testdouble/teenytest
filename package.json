@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "bats": "^1.9.0",
-    "core-assert": "^1.0.0",
     "standard": "^17.0.0",
     "which": "^3.0.0"
   },

@@ -1,4 +1,4 @@
-const assert = require('core-assert')
+const assert = require('assert')
 const Dog = require('../../lib/dog')
 
 module.exports = {

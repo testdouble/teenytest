@@ -1,7 +1,7 @@
 const async = require('async')
 const spawn = require('child_process').spawn
 const path = require('path')
-const assert = require('core-assert')
+const assert = require('assert')
 const helper = require('./support/helper')
 
 module.exports = function (cb) {

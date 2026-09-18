@@ -7,7 +7,6 @@
     "test": "teenytest \"test/**/*.js\" --helper unit-helper.js"
   },
   "devDependencies": {
-    "core-assert": "^0.2.1",
     "teenytest": "^6.0.4"
   }
 }

@@ -1,7 +1,7 @@
 const printerPlugin = require('../../vanilla/plugins/printer')
 const otherPrinterPlugin = require('../../vanilla/plugins/other-printer')
 
-const assert = require('core-assert')
+const assert = require('assert')
 
 module.exports = function (teenytest, cb) {
   // Do some shenanigans to verify things work as expected

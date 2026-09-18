@@ -1,4 +1,4 @@
-const assert = require('core-assert')
+const assert = require('assert')
 const teenytest = require('../index')
 const store = require('../lib/store')
 

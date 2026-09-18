@@ -1,5 +1,5 @@
 const helper = require('./support/helper')
-const assert = require('core-assert')
+const assert = require('assert')
 
 module.exports = function (cb) {
   helper.run('safe/fixtures/async-*.js', function (er, result, log) {
@@ -19,7 +19,7 @@ module.exports = function (cb) {
       '  ...',
       'not ok 4 - test #1 in `safe/fixtures/async-fail-test.js`',
       '  ---',
-      /Error: 98 == 42/,
+      /AssertionError \[ERR_ASSERTION\]: 98 == 42/,
       '  ...',
       'ok 5 - "firstTest" - test #1 in `safe/fixtures/async-good-test.js`',
       'ok 6 - "secondTest" - test #2 in `safe/fixtures/async-good-test.js`',
@@ -44,7 +44,7 @@ module.exports = function (cb) {
       '#',
       '#   4 - test #1 in `safe/fixtures/async-fail-test.js`',
       '#',
-      /# {5}AssertionError: 98 == 42/
+      /# {5}AssertionError \[ERR_ASSERTION\]: 98 == 42/
     )
     cb(er)
   })
