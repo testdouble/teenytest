@@ -1,5 +1,5 @@
 const helper = require('./support/helper')
-const assert = require('core-assert')
+const assert = require('assert')
 
 module.exports = function (cb) {
   helper.run('safe/fixtures/nested-test.js:10', function (er, result, log) {

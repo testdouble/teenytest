@@ -1,1 +1,1 @@
-global.assert = require('core-assert')
+global.assert = require('assert')

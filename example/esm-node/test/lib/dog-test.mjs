@@ -1,4 +1,4 @@
-import assert from 'core-assert'
+import assert from 'assert'
 import Dog from '../../lib/dog.js'
 
 export function beforeEach () {

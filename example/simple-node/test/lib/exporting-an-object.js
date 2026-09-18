@@ -1,4 +1,4 @@
-const assert = require('core-assert')
+const assert = require('assert')
 
 module.exports = {
   beforeAll: function () { 'I\'ll run once before both tests' },

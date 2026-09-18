@@ -1,4 +1,4 @@
-const assert = require('core-assert')
+const assert = require('assert')
 
 const contextyThings = []
 module.exports = {
